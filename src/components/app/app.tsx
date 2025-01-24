@@ -5,6 +5,7 @@ import SignIn from '../../pages/sign-in/sign-in';
 import MyList from '../../pages/my-list/my-list';
 import { Provider } from 'react-redux';
 import { store } from '../../store';
+import NotFound from '../../pages/not-found/not-found';
 
 function App(): JSX.Element {
   return (
@@ -14,6 +15,7 @@ function App(): JSX.Element {
           <Route path={AppRoute.Main} element={<Main />} />
           <Route path={AppRoute.SignIn} element={<SignIn />} />
           <Route path={AppRoute.MyList} element={<MyList />} />
+          <Route path='*' element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </Provider>
