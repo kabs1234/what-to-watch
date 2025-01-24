@@ -1,11 +1,9 @@
-import { Genre } from '../../const';
-
 export default function GenreItem({
   genre,
   activeGenre,
 }: {
-  genre: Genre;
-  activeGenre: Genre;
+  genre: string;
+  activeGenre: string;
 }): JSX.Element {
   return (
     <li
