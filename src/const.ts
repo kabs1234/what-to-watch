@@ -1,5 +1,9 @@
 export const REQUEST_TIMEOUT = 5000;
 
+export const STARTING_FILMS_COUNT = 8;
+
+export const ADDING_FILMS_COUNT = 8;
+
 export enum Action {
   FetchFilms = 'api/films',
   FetchPromoFilm = 'api/promoFilm',

@@ -1,14 +1,7 @@
-import { useAppSelector } from '../../hooks';
-import { getFilms } from '../../store/selectors';
+import { Films } from '../../types/store';
 import FilmCard from '../film-card/film-card';
 
-export default function FilmsList(): JSX.Element | null {
-  const films = useAppSelector(getFilms);
-
-  if (!films) {
-    return null;
-  }
-
+export default function FilmsList({ films }: { films: Films }): JSX.Element {
   return (
     <div className='catalog__films-list'>
       {films.map((film) => (
