@@ -6,7 +6,7 @@ import Footer from '../../components/footer/footer';
 
 export default function Main(): JSX.Element {
   return (
-    <div>
+    <>
       <Sprites />
       {<PromoFilm />}
       <div className='page-content'>
@@ -22,6 +22,6 @@ export default function Main(): JSX.Element {
         </section>
         <Footer />
       </div>
-    </div>
+    </>
   );
 }

@@ -7,19 +7,25 @@ export type InitialState = {
   films: Films | null;
   promoFilm: Film | null;
   genre: Genre;
+  areOffersLoading: boolean;
 };
 
 const initialState: InitialState = {
   films: null,
   promoFilm: null,
   genre: Genre.All,
+  areOffersLoading: false,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
   builder
+    .addCase(fetchFilmsAction.pending, (state, action) => {
+      state.areOffersLoading = true;
+    })
     .addCase(
       fetchFilmsAction.fulfilled,
       (state, action: PayloadAction<Films>) => {
+        state.areOffersLoading = false;
         state.films = action.payload;
       }
     )

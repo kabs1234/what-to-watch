@@ -11,5 +11,5 @@ export const store = configureStore({
     getDefaultMiddleware({ thunk: { extraArgument: api } }),
 });
 
-store.dispatch(fetchFilmsAction());
 store.dispatch(fetchPromoFilm());
+store.dispatch(fetchFilmsAction());

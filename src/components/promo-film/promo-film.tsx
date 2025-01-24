@@ -1,8 +1,9 @@
 import { useAppSelector } from '../../hooks';
+import { getPromoFilm } from '../../store/selectors';
 import Header from '../header/header';
 
 export function PromoFilm(): JSX.Element | null {
-  const promoFilm = useAppSelector((state) => state.promoFilm);
+  const promoFilm = useAppSelector(getPromoFilm);
 
   if (!promoFilm) {
     return null;
