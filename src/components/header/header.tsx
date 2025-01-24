@@ -1,26 +1,30 @@
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
+import Logo from '../logo/logo';
+
 export default function Header(): JSX.Element {
   return (
     <header className='page-header film-card__head'>
-      <div className='logo'>
-        <a className='logo__link'>
-          <span className='logo__letter logo__letter--1'>W</span>
-          <span className='logo__letter logo__letter--2'>T</span>
-          <span className='logo__letter logo__letter--3'>W</span>
-        </a>
-      </div>
+      <Logo />
       <ul className='user-block'>
         <li className='user-block__item'>
-          <div className='user-block__avatar'>
+          <Link
+            to={AppRoute.MyList}
+            className='user-block__avatar'
+            style={{ display: 'block' }}
+          >
             <img
               src='img/avatar.jpg'
               alt='User avatar'
               width={63}
               height={63}
             />
-          </div>
+          </Link>
         </li>
         <li className='user-block__item'>
-          <a className='user-block__link'>Sign out</a>
+          <Link to={AppRoute.SignIn} className='user-block__link'>
+            Sign out
+          </Link>
         </li>
       </ul>
     </header>
