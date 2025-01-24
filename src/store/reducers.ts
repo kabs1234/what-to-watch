@@ -1,16 +1,29 @@
 import { createReducer, PayloadAction } from '@reduxjs/toolkit';
-import { Films, State } from '../types/store';
-import { fetchFilmsAction } from './thunk';
+import { Film, Films } from '../types/store';
+import { fetchFilmsAction, fetchPromoFilm } from './thunk';
+import { Genre } from '../const';
 
-const initialState: State = {
+export type InitialState = {
+  films: Films | null;
+  promoFilm: Film | null;
+  genre: Genre;
+};
+
+const initialState: InitialState = {
   films: null,
+  promoFilm: null,
+  genre: Genre.All,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
-  builder.addCase(
-    fetchFilmsAction.fulfilled,
-    (state, action: PayloadAction<Films>) => {
-      state.films = action.payload;
-    }
-  );
+  builder
+    .addCase(
+      fetchFilmsAction.fulfilled,
+      (state, action: PayloadAction<Films>) => {
+        state.films = action.payload;
+      }
+    )
+    .addCase(fetchPromoFilm.fulfilled, (state, action: PayloadAction<Film>) => {
+      state.promoFilm = action.payload;
+    });
 });

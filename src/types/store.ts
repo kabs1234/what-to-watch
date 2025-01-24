@@ -1,3 +1,5 @@
+import { store } from '../store';
+
 export type Film = {
   id: number;
   name: string;
@@ -20,6 +22,4 @@ export type Film = {
 
 export type Films = Film[];
 
-export type State = {
-  films: Films | null;
-};
+export type State = ReturnType<typeof store.getState>;

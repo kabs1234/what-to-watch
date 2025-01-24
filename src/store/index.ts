@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { createAPI } from '../service/api';
 import { reducer } from './reducers';
-import { fetchFilmsAction } from './thunk';
+import { fetchFilmsAction, fetchPromoFilm } from './thunk';
 
 const api = createAPI();
 
@@ -12,3 +12,4 @@ export const store = configureStore({
 });
 
 store.dispatch(fetchFilmsAction());
+store.dispatch(fetchPromoFilm());
