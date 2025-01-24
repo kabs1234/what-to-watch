@@ -1,9 +1,11 @@
 export default function GenreItem({
   genre,
   activeGenre,
+  onClick,
 }: {
   genre: string;
   activeGenre: string;
+  onClick: (genre: string) => void;
 }): JSX.Element {
   return (
     <li
@@ -11,9 +13,13 @@ export default function GenreItem({
         activeGenre === genre ? 'catalog__genres-item--active' : ''
       }`}
     >
-      <a href='#' className='catalog__genres-link'>
+      <button
+        className='catalog__genres-link'
+        style={{ backgroundColor: 'transparent', border: 'none' }}
+        onClick={() => onClick(genre)}
+      >
         {genre}
-      </a>
+      </button>
     </li>
   );
 }

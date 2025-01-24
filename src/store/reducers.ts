@@ -1,11 +1,12 @@
 import { createReducer, PayloadAction } from '@reduxjs/toolkit';
 import { Film, Films } from '../types/store';
 import { fetchFilmsAction, fetchPromoFilm } from './thunk';
+import { setActiveGenreAction } from './actions';
 
 export type InitialState = {
   films: Films | null;
   promoFilm: Film | null;
-  genre: string;
+  activeGenre: string;
   genres: string[] | null;
   areOffersLoading: boolean;
 };
@@ -13,13 +14,16 @@ export type InitialState = {
 const initialState: InitialState = {
   films: null,
   promoFilm: null,
-  genre: 'All',
+  activeGenre: 'All',
   genres: null,
   areOffersLoading: false,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
   builder
+    .addCase(setActiveGenreAction, (state, action: PayloadAction<string>) => {
+      state.activeGenre = action.payload;
+    })
     .addCase(fetchFilmsAction.pending, (state, action) => {
       state.areOffersLoading = true;
     })

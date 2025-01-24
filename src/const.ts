@@ -5,6 +5,7 @@ export const STARTING_FILMS_COUNT = 8;
 export const ADDING_FILMS_COUNT = 8;
 
 export enum Action {
+  SetActiveGenre = 'main/setGenre',
   FetchFilms = 'api/films',
   FetchPromoFilm = 'api/promoFilm',
 }

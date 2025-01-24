@@ -6,6 +6,6 @@ export const getPromoFilm = (state: State) => state.promoFilm;
 
 export const getAreFilmsLoading = (state: State) => state.areOffersLoading;
 
-export const getGenre = (state: State) => state.genre;
+export const getActiveGenre = (state: State) => state.activeGenre;
 
 export const getGenres = (state: State) => state.genres;

@@ -1,15 +1,27 @@
+import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../hooks';
-import { getGenre, getGenres } from '../../store/selectors';
+import { getActiveGenre, getGenres } from '../../store/selectors';
 import GenreItem from '../genre-item/genre-item';
+import { setActiveGenreAction } from '../../store/actions';
 
 export default function GenresList(): JSX.Element {
-  const activeGenre = useAppSelector(getGenre);
+  const activeGenre = useAppSelector(getActiveGenre);
   const genres = useAppSelector(getGenres) ?? [];
+  const dispatch = useDispatch();
+
+  const handleGenreButtonClick = (genre: string) => {
+    dispatch(setActiveGenreAction(genre));
+  };
 
   return (
     <ul className='catalog__genres-list'>
       {genres.map((genre) => (
-        <GenreItem key={genre} genre={genre} activeGenre={activeGenre} />
+        <GenreItem
+          key={genre}
+          genre={genre}
+          activeGenre={activeGenre}
+          onClick={handleGenreButtonClick}
+        />
       ))}
     </ul>
   );
