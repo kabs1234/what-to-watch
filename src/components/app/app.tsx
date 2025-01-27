@@ -7,6 +7,7 @@ import NotFound from '../../pages/not-found/not-found';
 import { useAppSelector } from '../../hooks';
 import { getAreFilmsLoading } from '../../store/selectors';
 import Loading from '../loading/loading';
+import Film from '../../pages/film/film';
 
 function App(): JSX.Element {
   const areOffersLoading = useAppSelector(getAreFilmsLoading);
@@ -21,6 +22,7 @@ function App(): JSX.Element {
         <Route path={AppRoute.Main} element={<Main />} />
         <Route path={AppRoute.SignIn} element={<SignIn />} />
         <Route path={AppRoute.MyList} element={<MyList />} />
+        <Route path={`${AppRoute.Films}/:id`} element={<Film />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
     </BrowserRouter>

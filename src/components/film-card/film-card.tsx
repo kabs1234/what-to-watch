@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { Film } from '../../types/store';
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
 
 export default function FilmCard({ film }: { film: Film }): JSX.Element {
   const [hover, setHover] = useState<boolean>(false);
@@ -33,9 +35,12 @@ export default function FilmCard({ film }: { film: Film }): JSX.Element {
         )}
       </div>
       <h3 className='small-film-card__title'>
-        <a className='small-film-card__link' href='film-page.html'>
+        <Link
+          className='small-film-card__link'
+          to={`${AppRoute.Films}/${film.id}`}
+        >
           {film.name}
-        </a>
+        </Link>
       </h3>
     </article>
   );

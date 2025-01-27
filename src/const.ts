@@ -22,3 +22,11 @@ export enum AppRoute {
   Player = '/player',
   Films = '/films',
 }
+
+export enum FilmLevel {
+  Bad = 'Bad',
+  Normal = 'Normal',
+  Good = 'Good',
+  VeryGood = 'VeryGood',
+  Awesome = 'Awesome',
+}
