@@ -1,11 +1,11 @@
 import { createReducer, PayloadAction } from '@reduxjs/toolkit';
-import { Film, Films } from '../types/store';
-import { fetchFilmsAction, fetchPromoFilm } from './thunk';
+import { FilmType, Films } from '../types/store';
+import { fetchFilmsAction, fetchPromoFilm } from './thunks';
 import { setActiveGenreAction } from './actions';
 
 export type InitialState = {
   films: Films | null;
-  promoFilm: Film | null;
+  promoFilm: FilmType | null;
   activeGenre: string;
   genres: string[] | null;
   areOffersLoading: boolean;
@@ -32,7 +32,7 @@ export const reducer = createReducer(initialState, (builder) => {
       (state, action: PayloadAction<Films>) => {
         const films = action.payload;
 
-        const filmGenres = films.map((film: Film) => film.genre);
+        const filmGenres = films.map((film: FilmType) => film.genre);
         filmGenres.unshift('All');
 
         state.genres = Array.from(new Set(filmGenres));
@@ -41,7 +41,10 @@ export const reducer = createReducer(initialState, (builder) => {
         state.films = films;
       }
     )
-    .addCase(fetchPromoFilm.fulfilled, (state, action: PayloadAction<Film>) => {
-      state.promoFilm = action.payload;
-    });
+    .addCase(
+      fetchPromoFilm.fulfilled,
+      (state, action: PayloadAction<FilmType>) => {
+        state.promoFilm = action.payload;
+      }
+    );
 });

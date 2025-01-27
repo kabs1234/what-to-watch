@@ -1,6 +1,6 @@
 import { store } from '../store';
 
-export type Film = {
+export type FilmType = {
   id: number;
   name: string;
   posterImage: string;
@@ -20,6 +20,13 @@ export type Film = {
   isFavorite: boolean;
 };
 
-export type Films = Film[];
+export type FullFilm = {
+  film: FilmType;
+  similarFilms: Films;
+};
+
+export type Films = FilmType[];
 
 export type State = ReturnType<typeof store.getState>;
+
+export type AppDispatch = typeof store.dispatch;

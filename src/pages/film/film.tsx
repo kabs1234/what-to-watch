@@ -1,12 +1,38 @@
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useAppDispatch } from '../../hooks';
+import { fetchFilmAction } from '../../store/thunks';
+import { Films, FilmType } from '../../types/store';
 import FilmCard from '../../components/film-card/film-card';
 import Header from '../../components/header/header';
 import Sprites from '../../components/sprites/sprites';
-import { filmMock, similarFilmsMock } from '../../mocks/stub';
 import { getFilmLevel } from '../../utils/general';
+import Loading from '../../components/loading/loading';
 
 export default function Film(): JSX.Element {
-  const film = filmMock;
-  const similarFilms = similarFilmsMock;
+  const { id } = useParams();
+  const dispatch = useAppDispatch();
+  const [film, setFilm] = useState<FilmType | null>(null);
+  const [similarFilms, setSimilarFilms] = useState<Films | null>(null);
+
+  useEffect(() => {
+    if (!film || film.id !== Number(id)) {
+      dispatch(fetchFilmAction(Number(id))).then((result) => {
+        if ('error' in result) {
+          throw new Error('error loading film');
+        }
+
+        const fullFilm = result.payload;
+
+        setFilm(fullFilm.film);
+        setSimilarFilms(fullFilm.similarFilms);
+      });
+    }
+  }, [dispatch, id, film]);
+
+  if (!film || !similarFilms) {
+    return <Loading />;
+  }
 
   return (
     <div>

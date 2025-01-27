@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Film } from '../../types/store';
+import { FilmType } from '../../types/store';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 
-export default function FilmCard({ film }: { film: Film }): JSX.Element {
+export default function FilmCard({ film }: { film: FilmType }): JSX.Element {
   const [hover, setHover] = useState<boolean>(false);
 
   return (

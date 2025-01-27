@@ -8,6 +8,7 @@ export enum Action {
   SetActiveGenre = 'main/setGenre',
   FetchFilms = 'api/films',
   FetchPromoFilm = 'api/promoFilm',
+  FetchFilm = 'api/film',
 }
 
 export enum ApiRoute {
