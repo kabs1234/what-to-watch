@@ -16,19 +16,17 @@ export default function Film(): JSX.Element {
   const [similarFilms, setSimilarFilms] = useState<Films | null>(null);
 
   useEffect(() => {
-    if (!film || film.id !== Number(id)) {
-      dispatch(fetchFilmAction(Number(id))).then((result) => {
-        if ('error' in result) {
-          throw new Error('error loading film');
-        }
+    dispatch(fetchFilmAction(Number(id))).then((result) => {
+      if ('error' in result) {
+        throw new Error('error loading film');
+      }
 
-        const fullFilm = result.payload;
+      const fullFilm = result.payload;
 
-        setFilm(fullFilm.film);
-        setSimilarFilms(fullFilm.similarFilms);
-      });
-    }
-  }, [dispatch, id, film]);
+      setFilm(fullFilm.film);
+      setSimilarFilms(fullFilm.similarFilms);
+    });
+  }, [dispatch, id]);
 
   if (!film || !similarFilms) {
     return <Loading />;
