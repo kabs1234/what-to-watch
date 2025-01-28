@@ -31,3 +31,11 @@ export enum FilmLevel {
   VeryGood = 'VeryGood',
   Awesome = 'Awesome',
 }
+
+export enum FullFilmNav {
+  Overview = 'Overview',
+  Details = 'Details',
+  Reviews = 'Reviews',
+}
+
+export const FULL_FILM_NAVIGATIONS = Object.values(FullFilmNav);
