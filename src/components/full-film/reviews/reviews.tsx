@@ -28,6 +28,13 @@ export default function FullFilmReviews({
     return <p style={{ color: '#000' }}>Loading Comments...</p>;
   }
 
+  if (comments.length === 0) {
+    return (
+      <p style={{ color: '#000' }}>
+        No comments has been left. <br /> Be the first to comment the film!
+      </p>
+    );
+  }
   const halfCommentsCount = Math.ceil(comments.length / 2);
 
   return (
