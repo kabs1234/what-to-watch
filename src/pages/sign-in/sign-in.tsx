@@ -1,7 +1,41 @@
+import { SyntheticEvent, useRef } from 'react';
 import Footer from '../../components/footer/footer';
 import Sprites from '../../components/sprites/sprites';
+import { isEmailValid, isPasswordValid } from '../../utils/general';
+import { useAppDispatch } from '../../hooks';
+import { signInAction } from '../../store/thunks';
+import { useNavigate } from 'react-router-dom';
+import { AppRoute } from '../../const';
 
 export default function SignIn(): JSX.Element {
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const handleSignInButtonClick = (evt: SyntheticEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+
+    if (!emailRef.current || !passwordRef.current) {
+      return;
+    }
+
+    const emailValue = emailRef.current.value;
+    const passwordValue = passwordRef.current.value;
+
+    if (isEmailValid(emailValue) && isPasswordValid(passwordValue)) {
+      dispatch(
+        signInAction({ email: emailValue, password: passwordValue })
+      ).then((result) => {
+        if ('error' in result) {
+          throw new Error('Error signing in');
+        }
+
+        navigate(AppRoute.Main);
+      });
+    }
+  };
+
   return (
     <div>
       <Sprites />
@@ -17,7 +51,7 @@ export default function SignIn(): JSX.Element {
           <h1 className='page-title user-page__title'>Sign in</h1>
         </header>
         <div className='sign-in user-page__content'>
-          <form action='#' className='sign-in__form'>
+          <form className='sign-in__form' onSubmit={handleSignInButtonClick}>
             <div className='sign-in__fields'>
               <div className='sign-in__field'>
                 <input
@@ -26,6 +60,7 @@ export default function SignIn(): JSX.Element {
                   placeholder='Email address'
                   name='user-email'
                   id='user-email'
+                  ref={emailRef}
                 />
                 <label
                   className='sign-in__label visually-hidden'
@@ -41,6 +76,7 @@ export default function SignIn(): JSX.Element {
                   placeholder='Password'
                   name='user-password'
                   id='user-password'
+                  ref={passwordRef}
                 />
                 <label
                   className='sign-in__label visually-hidden'

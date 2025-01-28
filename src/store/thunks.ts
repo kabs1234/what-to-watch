@@ -1,7 +1,15 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 import { Action, ApiRoute } from '../const';
-import { Comments, Films, FilmType, FullFilm } from '../types/general';
+import {
+  Comments,
+  Films,
+  FilmType,
+  FullFilm,
+  LoginData,
+  User,
+} from '../types/general';
+import { removeToken, setToken } from '../utils/general';
 
 export const fetchFilmsAction = createAsyncThunk<
   Films,
@@ -48,4 +56,35 @@ export const fetchCommentsAction = createAsyncThunk<
   const { data } = await api.get<Comments>(`${ApiRoute.Comments}/${id}`);
 
   return data;
+});
+
+export const signInCheckAction = createAsyncThunk<
+  User,
+  undefined,
+  { extra: AxiosInstance }
+>(Action.SignInCheck, async (_, { extra: api }) => {
+  const { data } = await api.get<User>(ApiRoute.SignIn);
+
+  return data;
+});
+
+export const signInAction = createAsyncThunk<
+  User,
+  LoginData,
+  { extra: AxiosInstance }
+>(Action.SignIn, async ({ email, password }, { extra: api }) => {
+  const { data } = await api.post<User>(ApiRoute.SignIn, { email, password });
+
+  setToken(data.token);
+  return data;
+});
+
+export const signOutAction = createAsyncThunk<
+  void,
+  undefined,
+  { extra: AxiosInstance }
+>(Action.SignOut, async (_, { extra: api }) => {
+  await api.delete(ApiRoute.SignOut);
+
+  removeToken();
 });

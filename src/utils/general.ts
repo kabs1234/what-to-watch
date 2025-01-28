@@ -15,3 +15,25 @@ export const getFilmLevel = (rating: number): FilmLevel | 'another level' => {
 
   return 'another level';
 };
+
+export const getToken = (): string | null => localStorage.getItem('x-token');
+
+export const setToken = (token: string): void => {
+  localStorage.setItem('x-token', token);
+};
+
+export const removeToken = (): void => {
+  localStorage.removeItem('x-token');
+};
+
+export const isPasswordValid = (password: string): boolean => {
+  const regex = /^(?=.*[0-9])(?=.*[A-Za-z])[A-Za-z0-9]+$/;
+
+  return regex.test(password);
+};
+
+export const isEmailValid = (email: string): boolean => {
+  const regex = /^\S+@\S+\.\S+$/;
+
+  return regex.test(email);
+};
