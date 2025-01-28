@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
 import { fetchFilmAction } from '../../store/thunks';
-import { Films, FilmType } from '../../types/store';
+import { Films, FilmType } from '../../types/general';
 import FilmCard from '../../components/film-card/film-card';
 import Header from '../../components/header/header';
 import Sprites from '../../components/sprites/sprites';

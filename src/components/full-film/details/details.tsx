@@ -1,7 +1,7 @@
-import { FilmType } from '../../../types/store';
 import * as dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import { Fragment } from 'react';
+import { FilmType } from '../../../types/general';
 dayjs.extend(duration);
 
 export default function FullFilmDetails({

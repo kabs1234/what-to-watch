@@ -1,5 +1,5 @@
 import { FullFilmNav } from '../../../const';
-import { FilmType } from '../../../types/store';
+import { FilmType } from '../../../types/general';
 import FullFilmDetails from '../details/details';
 import FullFilmOverview from '../overview/overview';
 

@@ -1,5 +1,5 @@
 import { createReducer, PayloadAction } from '@reduxjs/toolkit';
-import { FilmType, Films } from '../types/store';
+import { FilmType, Films } from '../types/general';
 import { fetchFilmsAction, fetchPromoFilm } from './thunks';
 import { setActiveGenreAction } from './actions';
 

@@ -1,4 +1,4 @@
-import { FilmType } from '../../../types/store';
+import { FilmType } from '../../../types/general';
 import { getFilmLevel } from '../../../utils/general';
 
 export default function FullFilmOverview({

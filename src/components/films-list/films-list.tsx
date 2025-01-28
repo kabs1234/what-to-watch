@@ -1,4 +1,4 @@
-import { Films } from '../../types/store';
+import { Films } from '../../types/general';
 import FilmCard from '../film-card/film-card';
 
 export default function FilmsList({ films }: { films: Films }): JSX.Element {

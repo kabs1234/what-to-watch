@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { FullFilm, FilmType, Films } from '../types/store';
 import { AxiosInstance } from 'axios';
 import { Action, ApiRoute } from '../const';
+import { Films, FilmType, FullFilm } from '../types/general';
 
 export const fetchFilmsAction = createAsyncThunk<
   Films,

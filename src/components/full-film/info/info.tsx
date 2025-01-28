@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { FilmType } from '../../../types/store';
 import { FULL_FILM_NAVIGATIONS, FullFilmNav } from '../../../const';
 import FullFilmNavItem from '../nav-item/nav-item';
 import FullFilmNavContent from '../nav-content/nav-content';
+import { FilmType } from '../../../types/general';
 
 export default function FullFilmInfo({
   film,
