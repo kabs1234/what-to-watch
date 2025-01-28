@@ -1,4 +1,6 @@
-export const filmMock = {
+import { Comments, Films, FilmType } from '../types/general';
+
+export const filmMock: FilmType = {
   name: 'Snatch',
   posterImage: 'https://10.react.htmlacademy.pro/static/film/poster/Snatch.jpg',
   previewImage:
@@ -22,7 +24,7 @@ export const filmMock = {
     'https://10.react.htmlacademy.pro/static/film/video/dog.mp4',
 };
 
-export const similarFilmsMock = [
+export const similarFilmsMock: Films = [
   {
     name: 'Snatch',
     posterImage:
@@ -118,5 +120,63 @@ export const similarFilmsMock = [
     videoLink: 'https://10.react.htmlacademy.pro/static/film/video/bubbles.mp4',
     previewVideoLink:
       'https://10.react.htmlacademy.pro/static/film/video/traffic.mp4',
+  },
+];
+
+export const commentsMock: Comments = [
+  {
+    id: 1,
+    user: {
+      id: 14,
+      name: 'Corey',
+    },
+    rating: 5.2,
+    comment:
+      'This movie is perfect in all its categories: credits, sound track, production, casting, writing, photography, editing, acting, and direction.\nI was amazed with the freedom of the use of the camera. This movie will change the way movies are made. Slow-mo, stills, black and white, and color were all used to brilliant effect.',
+    date: '2024-12-23T09:25:27.623Z',
+  },
+  {
+    id: 2,
+    user: {
+      id: 10,
+      name: 'Max',
+    },
+    rating: 2.8,
+    comment:
+      'Poised to be an instant classic, almost everything about this film is phenomenal - the acting, the cinematography, the discography, etc.',
+    date: '2024-12-22T09:25:27.623Z',
+  },
+  {
+    id: 3,
+    user: {
+      id: 10,
+      name: 'Max',
+    },
+    rating: 2.8,
+    comment:
+      'Poised to be an instant classic, almost everything about this film is phenomenal - the acting, the cinematography, the discography, etc.',
+    date: '2024-12-22T09:25:27.623Z',
+  },
+  {
+    id: 4,
+    user: {
+      id: 10,
+      name: 'Max',
+    },
+    rating: 2.8,
+    comment:
+      'Poised to be an instant classic, almost everything about this film is phenomenal - the acting, the cinematography, the discography, etc.',
+    date: '2024-12-22T09:25:27.623Z',
+  },
+  {
+    id: 5,
+    user: {
+      id: 10,
+      name: 'Max',
+    },
+    rating: 2.8,
+    comment:
+      'Poised to be an instant classic, almost everything about this film is phenomenal - the acting, the cinematography, the discography, etc.',
+    date: '2024-12-22T09:25:27.623Z',
   },
 ];
