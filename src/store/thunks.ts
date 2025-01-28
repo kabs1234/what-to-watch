@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 import { Action, ApiRoute } from '../const';
-import { Films, FilmType, FullFilm } from '../types/general';
+import { Comments, Films, FilmType, FullFilm } from '../types/general';
 
 export const fetchFilmsAction = createAsyncThunk<
   Films,
@@ -38,4 +38,14 @@ export const fetchFilmAction = createAsyncThunk<
     film: filmData,
     similarFilms: similarFilmsData,
   };
+});
+
+export const fetchCommentsAction = createAsyncThunk<
+  Comments,
+  number,
+  { extra: AxiosInstance }
+>(Action.FetchComments, async (id, { extra: api }) => {
+  const { data } = await api.get<Comments>(`${ApiRoute.Comments}/${id}`);
+
+  return data;
 });

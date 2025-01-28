@@ -5,15 +5,17 @@ export const STARTING_FILMS_COUNT = 8;
 export const ADDING_FILMS_COUNT = 8;
 
 export enum Action {
-  SetActiveGenre = 'main/setGenre',
-  FetchFilms = 'api/films',
-  FetchPromoFilm = 'api/promoFilm',
-  FetchFilm = 'api/film',
+  SetActiveGenre = 'main/setActiveGenre',
+  FetchFilms = 'api/fetchFilms',
+  FetchPromoFilm = 'api/fetchPromoFilm',
+  FetchFilm = 'api/fetchFilm',
+  FetchComments = 'api/fetchComments',
 }
 
 export enum ApiRoute {
   Films = '/films',
   PromoFilm = '/promo',
+  Comments = '/comments',
 }
 
 export enum AppRoute {

@@ -17,8 +17,8 @@ export default function FullFilmNavContent({
     case FullFilmNav.Details:
       return <FullFilmDetails film={film} />;
     case FullFilmNav.Reviews:
-      return <FullFilmReviews />;
+      return <FullFilmReviews filmId={film.id} />;
     default:
-      return <span>Unknown navigation name</span>;
+      return <span style={{ color: '#000' }}>Unknown navigation name</span>;
   }
 }
