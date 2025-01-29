@@ -1,17 +1,27 @@
-import { SyntheticEvent, useRef } from 'react';
+import { SyntheticEvent, useEffect, useRef } from 'react';
 import Footer from '../../components/footer/footer';
 import Sprites from '../../components/sprites/sprites';
 import { isEmailValid, isPasswordValid } from '../../utils/general';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { signInAction } from '../../store/thunks';
 import { Link, useNavigate } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AppRoute, isAuthorized } from '../../const';
+import { getAuthorizationStatus } from '../../store/selectors';
+import { redirectToRouteAction } from '../../store/actions';
 
 export default function SignIn(): JSX.Element {
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (isAuthorized(authorizationStatus)) {
+      dispatch(redirectToRouteAction(AppRoute.Main));
+    }
+  }, [authorizationStatus, dispatch]);
+
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const handleSignInButtonClick = (evt: SyntheticEvent<HTMLFormElement>) => {
     evt.preventDefault();

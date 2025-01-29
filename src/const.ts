@@ -6,6 +6,7 @@ export const ADDING_FILMS_COUNT = 8;
 
 export enum Action {
   SetActiveGenre = 'main/setActiveGenre',
+  RedirectToRoute = 'middleware/redirectToRoute',
   FetchFilms = 'api/fetchFilms',
   FetchPromoFilm = 'api/fetchPromoFilm',
   FetchFilm = 'api/fetchFilm',

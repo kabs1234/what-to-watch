@@ -1,4 +1,8 @@
 import { createAction } from '@reduxjs/toolkit';
-import { Action } from '../const';
+import { Action, AppRoute } from '../const';
 
 export const setActiveGenreAction = createAction<string>(Action.SetActiveGenre);
+
+export const redirectToRouteAction = createAction<AppRoute>(
+  Action.RedirectToRoute
+);

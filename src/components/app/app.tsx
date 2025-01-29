@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Main from '../../pages/main/main';
 import { AppRoute } from '../../const';
 import SignIn from '../../pages/sign-in/sign-in';
@@ -17,15 +17,13 @@ function App(): JSX.Element {
   }
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path={AppRoute.Main} element={<Main />} />
-        <Route path={AppRoute.SignIn} element={<SignIn />} />
-        <Route path={AppRoute.MyList} element={<MyList />} />
-        <Route path={`${AppRoute.Films}/:id`} element={<Film />} />
-        <Route path='*' element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path={AppRoute.Main} element={<Main />} />
+      <Route path={AppRoute.SignIn} element={<SignIn />} />
+      <Route path={AppRoute.MyList} element={<MyList />} />
+      <Route path={`${AppRoute.Films}/:id`} element={<Film />} />
+      <Route path='*' element={<NotFound />} />
+    </Routes>
   );
 }
 
