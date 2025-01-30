@@ -32,6 +32,8 @@ export const isPasswordValid = (password: string): boolean => {
   return regex.test(password);
 };
 
+export const getFilmStatus = (isFavorite: boolean) => (isFavorite ? 0 : 1);
+
 export const isEmailValid = (email: string): boolean => {
   const regex = /^\S+@\S+\.\S+$/;
 

@@ -15,6 +15,7 @@ export enum Action {
   SignIn = 'api/signIn',
   SignInCheck = 'api/signInCheck',
   SignOut = 'api/signOut',
+  ChageFilmStatus = 'api/chageFilmStatus',
 }
 
 export enum ApiRoute {

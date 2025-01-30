@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
-import { fetchFilmAction } from '../../store/thunks';
+import { chageFilmStatusAction, fetchFilmAction } from '../../store/thunks';
 import { Films, FilmType } from '../../types/general';
 import FilmCard from '../../components/film-card/film-card';
 import Header from '../../components/header/header';
@@ -9,6 +9,8 @@ import Sprites from '../../components/sprites/sprites';
 import Loading from '../../components/loading/loading';
 import FullFilmInfo from '../../components/full-film/info/info';
 import Footer from '../../components/footer/footer';
+import FullFilmButtons from '../../components/full-film/buttons/buttons';
+import { getFilmStatus } from '../../utils/general';
 
 export default function Film(): JSX.Element {
   const { id } = useParams();
@@ -33,6 +35,21 @@ export default function Film(): JSX.Element {
     return <Loading />;
   }
 
+  const handleMyListButtonClick = () => {
+    dispatch(
+      chageFilmStatusAction({
+        filmid: film.id,
+        status: getFilmStatus(film.isFavorite),
+      })
+    ).then((result) => {
+      if ('error' in result) {
+        throw new Error('Error adding into my list');
+      }
+
+      setFilm({ ...film, isFavorite: !film.isFavorite });
+    });
+  };
+
   return (
     <div>
       <Sprites />
@@ -53,29 +70,7 @@ export default function Film(): JSX.Element {
                 <span className='film-card__genre'>{film.genre}</span>
                 <span className='film-card__year'>{film.released}</span>
               </p>
-              <div className='film-card__buttons'>
-                <button
-                  className='btn btn--play film-card__button'
-                  type='button'
-                >
-                  <svg viewBox='0 0 19 19' width={19} height={19}>
-                    <use xlinkHref='#play-s' />
-                  </svg>
-                  <span>Play</span>
-                </button>
-                <button
-                  className='btn btn--list film-card__button'
-                  type='button'
-                >
-                  <svg viewBox='0 0 19 20' width={19} height={20}>
-                    <use xlinkHref='#add' />
-                  </svg>
-                  <span>My list</span>
-                </button>
-                <a href='add-review.html' className='btn film-card__button'>
-                  Add review
-                </a>
-              </div>
+              <FullFilmButtons onMyListButtonClick={handleMyListButtonClick} />
             </div>
           </div>
         </div>

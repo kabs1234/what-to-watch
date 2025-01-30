@@ -98,3 +98,15 @@ export const fetchFavoriteFilmsAction = createAsyncThunk<
 
   return data;
 });
+
+export const chageFilmStatusAction = createAsyncThunk<
+  FilmType,
+  { filmid: number; status: 0 | 1 },
+  { extra: AxiosInstance }
+>(Action.ChageFilmStatus, async ({ filmid, status }, { extra: api }) => {
+  const { data } = await api.post<FilmType>(
+    `${ApiRoute.FavoriteFilms}/${filmid}/${status}`
+  );
+
+  return data;
+});
