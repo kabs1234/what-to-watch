@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
 import { fetchFilmAction } from '../../store/thunks';
 import { Films, FilmType } from '../../types/general';
@@ -10,6 +10,7 @@ import Loading from '../../components/loading/loading';
 import FullFilmInfo from '../../components/full-film/info/info';
 import Footer from '../../components/footer/footer';
 import MyListButton from '../../components/my-list-button/my-list-button';
+import { AppRoute } from '../../const';
 
 export default function Film(): JSX.Element {
   const { id } = useParams();
@@ -65,9 +66,12 @@ export default function Film(): JSX.Element {
                   <span>Play</span>
                 </button>
                 <MyListButton film={film} setFilm={setFilm} />
-                <a href='add-review.html' className='btn film-card__button'>
+                <Link
+                  to={`${AppRoute.Films}/${film.id}/review`}
+                  className='btn film-card__button'
+                >
                   Add review
-                </a>
+                </Link>
               </div>
             </div>
           </div>

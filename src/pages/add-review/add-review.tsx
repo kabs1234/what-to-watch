@@ -1,59 +1,66 @@
+import { Link, useParams } from 'react-router-dom';
 import Rating from '../../components/rating/rating';
 import Sprites from '../../components/sprites/sprites';
+import { useAppSelector } from '../../hooks';
+import { getFilms } from '../../store/selectors';
+import Loading from '../../components/loading/loading';
+import NotFound from '../not-found/not-found';
+import { shadeColor } from '../../utils/general';
+import UserBlock from '../../components/user-block/user-block';
+import Logo from '../../components/logo/logo';
+import { AppRoute } from '../../const';
 
 export default function AddReview(): JSX.Element {
+  const { id } = useParams();
+  const allfilms = useAppSelector(getFilms);
+
+  if (!allfilms) {
+    return <Loading />;
+  }
+
+  const film = allfilms.find((element) => element.id === Number(id));
+
+  if (!film) {
+    return <NotFound />;
+  }
+
+  const textareaBg = shadeColor(film.backgroundColor, 6);
+
   return (
     <div>
       <Sprites />
-      <section className='film-card film-card--full'>
+      <section
+        className='film-card film-card--full'
+        style={{ backgroundColor: film.backgroundColor }}
+      >
         <div className='film-card__header'>
           <div className='film-card__bg'>
-            <img
-              src='img/bg-the-grand-budapest-hotel.jpg'
-              alt='The Grand Budapest Hotel'
-            />
+            <img src={film.backgroundImage} alt={film.name} />
           </div>
           <h1 className='visually-hidden'>WTW</h1>
           <header className='page-header'>
-            <div className='logo'>
-              <a href='main.html' className='logo__link'>
-                <span className='logo__letter logo__letter--1'>W</span>
-                <span className='logo__letter logo__letter--2'>T</span>
-                <span className='logo__letter logo__letter--3'>W</span>
-              </a>
-            </div>
+            <Logo />
             <nav className='breadcrumbs'>
               <ul className='breadcrumbs__list'>
                 <li className='breadcrumbs__item'>
-                  <a href='film-page.html' className='breadcrumbs__link'>
-                    The Grand Budapest Hotel
-                  </a>
+                  <Link
+                    to={`${AppRoute.Films}/${film.id}`}
+                    className='breadcrumbs__link'
+                  >
+                    {film.name}
+                  </Link>
                 </li>
                 <li className='breadcrumbs__item'>
-                  <a className='breadcrumbs__link'>Add review</a>
+                  <span className='breadcrumbs__link'>Add review</span>
                 </li>
               </ul>
             </nav>
-            <ul className='user-block'>
-              <li className='user-block__item'>
-                <div className='user-block__avatar'>
-                  <img
-                    src='img/avatar.jpg'
-                    alt='User avatar'
-                    width={63}
-                    height={63}
-                  />
-                </div>
-              </li>
-              <li className='user-block__item'>
-                <a className='user-block__link'>Sign out</a>
-              </li>
-            </ul>
+            <UserBlock />
           </header>
           <div className='film-card__poster film-card__poster--small'>
             <img
-              src='img/the-grand-budapest-hotel-poster.jpg'
-              alt='The Grand Budapest Hotel poster'
+              src={film.posterImage}
+              alt={`${film.name} poster`}
               width={218}
               height={327}
             />
@@ -62,7 +69,10 @@ export default function AddReview(): JSX.Element {
         <div className='add-review'>
           <form action='#' className='add-review__form'>
             <Rating />
-            <div className='add-review__text'>
+            <div
+              className='add-review__text'
+              style={{ backgroundColor: textareaBg }}
+            >
               <textarea
                 className='add-review__textarea'
                 name='review-text'
