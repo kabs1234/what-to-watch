@@ -4,6 +4,8 @@ export const STARTING_FILMS_COUNT = 8;
 
 export const ADDING_FILMS_COUNT = 8;
 
+export const RATING_STARS_COUNT = 10;
+
 export enum Action {
   SetActiveGenre = 'main/setActiveGenre',
   RedirectToRoute = 'middleware/redirectToRoute',
