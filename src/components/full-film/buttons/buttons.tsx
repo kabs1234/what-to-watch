@@ -1,8 +1,10 @@
 type FullFilmButtonsProps = {
+  isFavorite: boolean;
   onMyListButtonClick: () => void;
 };
 
 export default function FullFilmButtons({
+  isFavorite,
   onMyListButtonClick,
 }: FullFilmButtonsProps): JSX.Element {
   return (
@@ -19,7 +21,7 @@ export default function FullFilmButtons({
         onClick={onMyListButtonClick}
       >
         <svg viewBox='0 0 19 20' width={19} height={20}>
-          <use xlinkHref='#add' />
+          <use xlinkHref={isFavorite ? '#in-list' : '#add'} />
         </svg>
         <span>My list</span>
       </button>

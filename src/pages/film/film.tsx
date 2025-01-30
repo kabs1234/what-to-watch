@@ -70,7 +70,10 @@ export default function Film(): JSX.Element {
                 <span className='film-card__genre'>{film.genre}</span>
                 <span className='film-card__year'>{film.released}</span>
               </p>
-              <FullFilmButtons onMyListButtonClick={handleMyListButtonClick} />
+              <FullFilmButtons
+                isFavorite={film.isFavorite}
+                onMyListButtonClick={handleMyListButtonClick}
+              />
             </div>
           </div>
         </div>
