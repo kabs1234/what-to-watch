@@ -88,3 +88,13 @@ export const signOutAction = createAsyncThunk<
 
   removeToken();
 });
+
+export const fetchFavoriteFilmsAction = createAsyncThunk<
+  Films,
+  undefined,
+  { extra: AxiosInstance }
+>(Action.FetchFavoriteFilms, async (_, { extra: api }) => {
+  const { data } = await api.get<Films>(ApiRoute.FavoriteFilms);
+
+  return data;
+});

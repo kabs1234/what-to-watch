@@ -11,6 +11,7 @@ export enum Action {
   FetchPromoFilm = 'api/fetchPromoFilm',
   FetchFilm = 'api/fetchFilm',
   FetchComments = 'api/fetchComments',
+  FetchFavoriteFilms = 'api/fetchFavoriteFilms',
   SignIn = 'api/signIn',
   SignInCheck = 'api/signInCheck',
   SignOut = 'api/signOut',
@@ -22,6 +23,7 @@ export enum ApiRoute {
   Comments = '/comments',
   SignIn = '/login',
   SignOut = '/logout',
+  FavoriteFilms = '/favorite',
 }
 
 export enum AppRoute {
