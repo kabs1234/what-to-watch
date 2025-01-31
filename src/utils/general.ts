@@ -1,4 +1,7 @@
 import { FilmLevel } from '../const';
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
+dayjs.extend(duration);
 
 export const getFilmLevel = (rating: number): FilmLevel | 'another level' => {
   if (rating >= 0 && rating <= 3) {
@@ -55,3 +58,23 @@ export function shadeColor(color: string, percent: number): string {
 
   return `#${RR}${GG}${BB}`;
 }
+
+export const formatTime = (timeInSeconds: number): string =>
+  dayjs.duration(timeInSeconds, 'seconds').format('[-]MM:ss');
+
+export const getDisplayTime = (
+  videoDuration: number | null,
+  currentTime: number,
+  isPlaying: boolean
+): string | null => {
+  if (videoDuration === null) {
+    return null;
+  }
+
+  if (!isPlaying) {
+    return formatTime(videoDuration);
+  }
+
+  const remainingTime = videoDuration - currentTime;
+  return formatTime(remainingTime);
+};

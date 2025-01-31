@@ -4,13 +4,41 @@ import { getFilms } from '../../store/selectors';
 import Loading from '../loading/loading';
 import NotFound from '../../pages/not-found/not-found';
 import Sprites from '../sprites/sprites';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { getDisplayTime } from '../../utils/general';
 
 export default function Player(): JSX.Element {
   const { id } = useParams();
   const allfilms = useAppSelector(getFilms);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [activeControl, setActiveControl] = useState<'play' | 'pause'>('play');
+  const [currentTime, setCurrentTime] = useState(0);
+  const [videoDuration, setVideoDuration] = useState<number | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  useEffect(() => {
+    const videoPlayer = videoRef.current;
+
+    const handleLoadedMetadata = () => {
+      if (videoPlayer) {
+        setVideoDuration(videoPlayer.duration);
+      }
+    };
+
+    const handleTimeUpdate = () => {
+      if (videoPlayer) {
+        setCurrentTime(videoPlayer.currentTime);
+      }
+    };
+
+    videoPlayer?.addEventListener('loadedmetadata', handleLoadedMetadata);
+    videoPlayer?.addEventListener('timeupdate', handleTimeUpdate);
+
+    return () => {
+      videoPlayer?.removeEventListener('loadedmetadata', handleLoadedMetadata);
+      videoPlayer?.removeEventListener('timeupdate', handleTimeUpdate);
+    };
+  }, []);
 
   if (!allfilms) {
     return <Loading />;
@@ -23,20 +51,17 @@ export default function Player(): JSX.Element {
   }
 
   const controlPlayer = () => {
-    if (!videoRef.current) {
-      return;
-    }
-
     const videoPlayer = videoRef.current;
-
     if (activeControl === 'play') {
-      videoPlayer.play();
+      videoPlayer?.play();
       setActiveControl('pause');
+      setIsPlaying(true); // Set isPlaying to true when video starts playing
       return;
     }
 
     setActiveControl('play');
-    videoPlayer.pause();
+    videoPlayer?.pause();
+    setIsPlaying(false); // Set isPlaying to false when video is paused
   };
 
   return (
@@ -60,7 +85,9 @@ export default function Player(): JSX.Element {
                 Toggler
               </div>
             </div>
-            <div className='player__time-value'>1:30:29</div>
+            <div className='player__time-value'>
+              {getDisplayTime(videoDuration, currentTime, isPlaying)}
+            </div>
           </div>
           <div className='player__controls-row'>
             <button
