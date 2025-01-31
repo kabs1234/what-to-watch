@@ -4,6 +4,7 @@ import { getPromoFilm } from '../../store/selectors';
 import { FilmType } from '../../types/general';
 import Header from '../header/header';
 import MyListButton from '../my-list-button/my-list-button';
+import PlayFilmButton from '../play-film-button/play-film-button';
 
 export function PromoFilm(): JSX.Element | null {
   const promoFilm = useAppSelector(getPromoFilm);
@@ -37,12 +38,7 @@ export function PromoFilm(): JSX.Element | null {
               <span className='film-card__year'>{promoFilm.released}</span>
             </p>
             <div className='film-card__buttons'>
-              <button className='btn btn--play film-card__button' type='button'>
-                <svg viewBox='0 0 19 19' width={19} height={19}>
-                  <use xlinkHref='#play-s' />
-                </svg>
-                <span>Play</span>
-              </button>
+              <PlayFilmButton filmId={promoFilm.id} />
               <MyListButton film={film} setFilm={setFilm} />
             </div>
           </div>

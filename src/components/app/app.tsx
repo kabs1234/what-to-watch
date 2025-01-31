@@ -13,6 +13,7 @@ import Loading from '../loading/loading';
 import Film from '../../pages/film/film';
 import PrivateRoute from '../private-route/private-route';
 import AddReview from '../../pages/add-review/add-review';
+import Player from '../player/player';
 
 function App(): JSX.Element {
   const areOffersLoading = useAppSelector(getAreFilmsLoading);
@@ -36,6 +37,7 @@ function App(): JSX.Element {
       />
       <Route path={`${AppRoute.Films}/:id`} element={<Film />} />
       <Route path={`${AppRoute.Films}/:id/review`} element={<AddReview />} />
+      <Route path={`${AppRoute.Player}/:id`} element={<Player />} />
       <Route path='*' element={<NotFound />} />
     </Routes>
   );

@@ -11,6 +11,7 @@ import FullFilmInfo from '../../components/full-film/info/info';
 import Footer from '../../components/footer/footer';
 import MyListButton from '../../components/my-list-button/my-list-button';
 import { AppRoute } from '../../const';
+import PlayFilmButton from '../../components/play-film-button/play-film-button';
 
 export default function Film(): JSX.Element {
   const { id } = useParams();
@@ -56,15 +57,7 @@ export default function Film(): JSX.Element {
                 <span className='film-card__year'>{film.released}</span>
               </p>
               <div className='film-card__buttons'>
-                <button
-                  className='btn btn--play film-card__button'
-                  type='button'
-                >
-                  <svg viewBox='0 0 19 19' width={19} height={19}>
-                    <use xlinkHref='#play-s' />
-                  </svg>
-                  <span>Play</span>
-                </button>
+                <PlayFilmButton filmId={film.id} />
                 <MyListButton film={film} setFilm={setFilm} />
                 <Link
                   to={`${AppRoute.Films}/${film.id}/review`}
