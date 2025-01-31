@@ -1,7 +1,7 @@
 import { Link, useParams } from 'react-router-dom';
 import Rating from '../../components/rating/rating';
 import Sprites from '../../components/sprites/sprites';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getFilms } from '../../store/selectors';
 import Loading from '../../components/loading/loading';
 import NotFound from '../not-found/not-found';
@@ -9,10 +9,23 @@ import { shadeColor } from '../../utils/general';
 import UserBlock from '../../components/user-block/user-block';
 import Logo from '../../components/logo/logo';
 import { AppRoute } from '../../const';
+import { SyntheticEvent, useState } from 'react';
+import { postCommentAction } from '../../store/thunks';
+import { redirectToRouteAction } from '../../store/actions';
 
 export default function AddReview(): JSX.Element {
   const { id } = useParams();
   const allfilms = useAppSelector(getFilms);
+
+  const [activeRating, setActiveRating] = useState<number>(0);
+  const [commentText, setCommentText] = useState<string>('');
+  const commentLength = commentText.length;
+  const isFormValid =
+    commentLength >= 50 && commentLength <= 400 && activeRating !== 0;
+
+  const [isSubmitButtonDisabled, setIsSubmitButtonDisabled] =
+    useState<boolean>(false);
+  const dispatch = useAppDispatch();
 
   if (!allfilms) {
     return <Loading />;
@@ -25,6 +38,35 @@ export default function AddReview(): JSX.Element {
   }
 
   const textareaBg = shadeColor(film.backgroundColor, 6);
+
+  const handleStarClick = (rating: number): void => {
+    setActiveRating(rating);
+  };
+
+  const handleCommentChange = (evt: SyntheticEvent<HTMLTextAreaElement>) => {
+    setCommentText(evt.currentTarget.value);
+  };
+
+  const handleFormSubmit = (evt: SyntheticEvent<HTMLFormElement>): void => {
+    evt.preventDefault();
+
+    setIsSubmitButtonDisabled(true);
+
+    dispatch(
+      postCommentAction({
+        comment: commentText,
+        rating: activeRating,
+        filmId: film.id,
+      })
+    ).then((result) => {
+      if ('error' in result) {
+        setIsSubmitButtonDisabled(false);
+        throw new Error('Error posting comment');
+      }
+
+      dispatch(redirectToRouteAction(`${AppRoute.Films}/${film.id}`));
+    });
+  };
 
   return (
     <div>
@@ -67,8 +109,8 @@ export default function AddReview(): JSX.Element {
           </div>
         </div>
         <div className='add-review'>
-          <form action='#' className='add-review__form'>
-            <Rating />
+          <form className='add-review__form' onSubmit={handleFormSubmit}>
+            <Rating activeRating={activeRating} onStarClick={handleStarClick} />
             <div
               className='add-review__text'
               style={{ backgroundColor: textareaBg }}
@@ -79,10 +121,18 @@ export default function AddReview(): JSX.Element {
                 id='review-text'
                 placeholder='Review text'
                 defaultValue={''}
+                minLength={50}
+                maxLength={400}
+                value={commentText}
+                onChange={handleCommentChange}
               />
               <div className='add-review__submit'>
-                <button className='add-review__btn' type='submit'>
-                  Post
+                <button
+                  className='add-review__btn'
+                  type='submit'
+                  disabled={isSubmitButtonDisabled || !isFormValid}
+                >
+                  {isSubmitButtonDisabled ? 'Posting...' : 'Post'}
                 </button>
               </div>
             </div>

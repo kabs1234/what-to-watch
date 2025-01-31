@@ -1,7 +1,15 @@
 import { RATING_STARS_COUNT } from '../../const';
 import RatingStar from '../rating-star/rating-star';
 
-export default function Rating(): JSX.Element {
+type RatingProps = {
+  activeRating: number;
+  onStarClick: (rating: number) => void;
+};
+
+export default function Rating({
+  activeRating,
+  onStarClick,
+}: RatingProps): JSX.Element {
   const ratingStars: number[] = [];
 
   for (let i = RATING_STARS_COUNT; i > 0; i--) {
@@ -12,7 +20,12 @@ export default function Rating(): JSX.Element {
     <div className='rating'>
       <div className='rating__stars'>
         {ratingStars.map((ratingIndex) => (
-          <RatingStar key={ratingIndex} ratingIndex={ratingIndex} />
+          <RatingStar
+            key={ratingIndex}
+            ratingIndex={ratingIndex}
+            activeRating={activeRating}
+            onStarClick={onStarClick}
+          />
         ))}
       </div>
     </div>

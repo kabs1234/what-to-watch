@@ -1,8 +1,14 @@
+type RatingStarProps = {
+  ratingIndex: number;
+  activeRating: number;
+  onStarClick: (rating: number) => void;
+};
+
 export default function RatingStar({
   ratingIndex,
-}: {
-  ratingIndex: number;
-}): JSX.Element {
+  activeRating,
+  onStarClick,
+}: RatingStarProps): JSX.Element {
   return (
     <>
       <input
@@ -11,6 +17,8 @@ export default function RatingStar({
         type='radio'
         name='rating'
         defaultValue={ratingIndex}
+        defaultChecked={activeRating >= ratingIndex}
+        onClick={() => onStarClick(ratingIndex)}
       />
       <label className='rating__label' htmlFor={`star-${ratingIndex}`}>
         Rating {ratingIndex}

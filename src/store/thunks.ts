@@ -110,3 +110,20 @@ export const chageFilmStatusAction = createAsyncThunk<
 
   return data;
 });
+
+export const postCommentAction = createAsyncThunk<
+  Comments,
+  {
+    filmId: number;
+    comment: string;
+    rating: number;
+  },
+  { extra: AxiosInstance }
+>(Action.PostComment, async ({ comment, rating, filmId }, { extra: api }) => {
+  const { data } = await api.post<Comments>(`${ApiRoute.Comments}/${filmId}`, {
+    comment,
+    rating,
+  });
+
+  return data;
+});
