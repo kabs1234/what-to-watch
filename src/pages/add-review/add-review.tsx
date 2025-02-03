@@ -2,13 +2,13 @@ import { Link, useParams } from 'react-router-dom';
 import Rating from '../../components/rating/rating';
 import Sprites from '../../components/sprites/sprites';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getFilms } from '../../store/selectors';
+import { getAuthorizationStatus, getFilms } from '../../store/selectors';
 import Loading from '../../components/loading/loading';
 import NotFound from '../not-found/not-found';
 import { shadeColor } from '../../utils/general';
 import UserBlock from '../../components/user-block/user-block';
 import Logo from '../../components/logo/logo';
-import { AppRoute } from '../../const';
+import { AppRoute, isAuthorized } from '../../const';
 import { SyntheticEvent, useState } from 'react';
 import { postCommentAction } from '../../store/thunks';
 import { redirectToRouteAction } from '../../store/actions';
@@ -16,16 +16,21 @@ import { redirectToRouteAction } from '../../store/actions';
 export default function AddReview(): JSX.Element {
   const { id } = useParams();
   const allfilms = useAppSelector(getFilms);
+  const dispatch = useAppDispatch();
 
   const [activeRating, setActiveRating] = useState<number>(0);
   const [commentText, setCommentText] = useState<string>('');
   const commentLength = commentText.length;
   const isFormValid =
     commentLength >= 50 && commentLength <= 400 && activeRating !== 0;
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   const [isSubmitButtonDisabled, setIsSubmitButtonDisabled] =
     useState<boolean>(false);
-  const dispatch = useAppDispatch();
+
+  if (!isAuthorized(authorizationStatus)) {
+    dispatch(redirectToRouteAction(AppRoute.SignIn));
+  }
 
   if (!allfilms) {
     return <Loading />;

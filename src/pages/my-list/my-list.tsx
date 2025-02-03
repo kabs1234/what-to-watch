@@ -3,17 +3,26 @@ import Footer from '../../components/footer/footer';
 import Logo from '../../components/logo/logo';
 import Sprites from '../../components/sprites/sprites';
 import { Films } from '../../types/general';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchFavoriteFilmsAction } from '../../store/thunks';
 import Loading from '../../components/loading/loading';
 import FilmCard from '../../components/film-card/film-card';
+import { getAuthorizationStatus } from '../../store/selectors';
+import { AppRoute, isAuthorized } from '../../const';
+import { redirectToRouteAction } from '../../store/actions';
 
 export default function MyList(): JSX.Element {
   const [favoriteFilms, setFavoriteFilms] = useState<Films | null>(null);
   const dispatch = useAppDispatch();
   const hasFetched = useRef(false);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   useEffect(() => {
+    if (!isAuthorized(authorizationStatus)) {
+      dispatch(redirectToRouteAction(AppRoute.SignIn));
+      return;
+    }
+
     if (!hasFetched.current) {
       hasFetched.current = true;
       dispatch(fetchFavoriteFilmsAction()).then((result) => {
