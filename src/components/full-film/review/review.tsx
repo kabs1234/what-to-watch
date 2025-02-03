@@ -8,7 +8,7 @@ export default function FullFilmReview({
 }): JSX.Element {
   const convertedDate = dayjs(comment.date);
   const dateTime = convertedDate.format('YYYY-MM-DD');
-  const formattedDate = convertedDate.format('MMMM D YYYY');
+  const formattedDate = convertedDate.format('MMMM D[,] YYYY');
 
   return (
     <div className='review'>
