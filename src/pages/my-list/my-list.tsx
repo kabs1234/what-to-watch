@@ -10,6 +10,7 @@ import FilmCard from '../../components/film-card/film-card';
 import { getAuthorizationStatus } from '../../store/selectors';
 import { AppRoute, isAuthorized } from '../../const';
 import { redirectToRouteAction } from '../../store/actions';
+import UserBlock from '../../components/user-block/user-block';
 
 export default function MyList(): JSX.Element {
   const [favoriteFilms, setFavoriteFilms] = useState<Films | null>(null);
@@ -46,21 +47,7 @@ export default function MyList(): JSX.Element {
         <header className='page-header user-page__head'>
           <Logo />
           <h1 className='page-title user-page__title'>My list</h1>
-          <ul className='user-block'>
-            <li className='user-block__item'>
-              <div className='user-block__avatar'>
-                <img
-                  src='img/avatar.jpg'
-                  alt='User avatar'
-                  width={63}
-                  height={63}
-                />
-              </div>
-            </li>
-            <li className='user-block__item'>
-              <a className='user-block__link'>Sign out</a>
-            </li>
-          </ul>
+          <UserBlock />
         </header>
         <section className='catalog'>
           <h2 className='catalog__title visually-hidden'>Catalog</h2>
