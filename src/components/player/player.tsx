@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
 import { getFilms } from '../../store/selectors';
 import Loading from '../loading/loading';
@@ -10,6 +10,8 @@ import { getDisplayTime } from '../../utils/general';
 export default function Player(): JSX.Element {
   const { id } = useParams();
   const allfilms = useAppSelector(getFilms);
+  const navigate = useNavigate();
+
   const videoRef = useRef<HTMLVideoElement>(null);
   const [activeControl, setActiveControl] = useState<'play' | 'pause'>('play');
   const [currentTime, setCurrentTime] = useState(0);
@@ -37,6 +39,10 @@ export default function Player(): JSX.Element {
         setVideoProgress(
           Math.round((videoPlayer.currentTime * 100) / videoPlayer.duration)
         );
+
+        if (videoPlayer.ended) {
+          setActiveControl('play');
+        }
       }
     };
 
@@ -59,7 +65,7 @@ export default function Player(): JSX.Element {
     return <NotFound />;
   }
 
-  const controlPlayer = () => {
+  const controlPlayer = (): void => {
     const videoPlayer = videoRef.current;
 
     if (videoPlayer) {
@@ -74,17 +80,20 @@ export default function Player(): JSX.Element {
     }
   };
 
+  const handleExitButtonClick = (): void => {
+    navigate(-1);
+  };
+
   return (
     <>
       <Sprites />
       <div className='player'>
-        <video
-          src={film.videoLink}
-          className='player__video'
-          ref={videoRef}
-          autoPlay
-        />
-        <button type='button' className='player__exit'>
+        <video src={film.videoLink} className='player__video' ref={videoRef} />
+        <button
+          type='button'
+          className='player__exit'
+          onClick={handleExitButtonClick}
+        >
           Exit
         </button>
         <div className='player__controls'>
