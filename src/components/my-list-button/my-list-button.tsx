@@ -1,4 +1,7 @@
-import { useAppDispatch } from '../../hooks';
+import { toast } from 'react-toastify';
+import { isAuthorized } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getAuthorizationStatus } from '../../store/selectors';
 import { chageFilmStatusAction } from '../../store/thunks';
 import { FilmType } from '../../types/general';
 import { getFilmStatus } from '../../utils/general';
@@ -13,12 +16,18 @@ export default function MyListButton({
   setFilm,
 }: MyListButtonProps): JSX.Element | null {
   const dispatch = useAppDispatch();
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   if (!film) {
     return null;
   }
 
   const handleMyListButtonClick = () => {
+    if (!isAuthorized(authorizationStatus)) {
+      toast.info('Please sign in first before performing that action.');
+      return;
+    }
+
     dispatch(
       chageFilmStatusAction({
         filmid: film.id,

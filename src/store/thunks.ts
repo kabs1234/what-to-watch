@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { AxiosInstance } from 'axios';
+import axios, { AxiosInstance } from 'axios';
 import { Action, ApiRoute } from '../const';
 import {
   Comments,
@@ -10,15 +10,21 @@ import {
   User,
 } from '../types/general';
 import { removeToken, setToken } from '../utils/general';
+import { toast } from 'react-toastify';
 
 export const fetchFilmsAction = createAsyncThunk<
   Films,
   undefined,
   { extra: AxiosInstance }
 >(Action.FetchFilms, async (_, { extra: api }) => {
-  const { data } = await api.get<Films>(ApiRoute.Films);
+  try {
+    const { data } = await api.get<Films>(ApiRoute.Films);
 
-  return data;
+    return data;
+  } catch (err) {
+    toast.error('Error loading films');
+    throw new Error('Error loading films');
+  }
 });
 
 export const fetchPromoFilm = createAsyncThunk<
@@ -26,9 +32,14 @@ export const fetchPromoFilm = createAsyncThunk<
   undefined,
   { extra: AxiosInstance }
 >(Action.FetchPromoFilm, async (_, { extra: api }) => {
-  const { data } = await api.get<FilmType>(ApiRoute.PromoFilm);
+  try {
+    const { data } = await api.get<FilmType>(ApiRoute.PromoFilm);
 
-  return data;
+    return data;
+  } catch (err) {
+    toast.error('Error loading promo film');
+    throw new Error('Error loading promo film');
+  }
 });
 
 export const fetchFilmAction = createAsyncThunk<
@@ -36,16 +47,23 @@ export const fetchFilmAction = createAsyncThunk<
   number,
   { extra: AxiosInstance }
 >(Action.FetchFilm, async (id, { extra: api }) => {
-  const film = await api.get<FilmType>(`${ApiRoute.Films}/${id}`);
-  const similarFilms = await api.get<Films>(`${ApiRoute.Films}/${id}/similar`);
+  try {
+    const film = await api.get<FilmType>(`${ApiRoute.Films}/${id}`);
+    const similarFilms = await api.get<Films>(
+      `${ApiRoute.Films}/${id}/similar`
+    );
 
-  const filmData = film.data;
-  const similarFilmsData = similarFilms.data;
+    const filmData = film.data;
+    const similarFilmsData = similarFilms.data;
 
-  return {
-    film: filmData,
-    similarFilms: similarFilmsData,
-  };
+    return {
+      film: filmData,
+      similarFilms: similarFilmsData,
+    };
+  } catch (err) {
+    toast.error('Error loading film');
+    throw new Error('Error loading film');
+  }
 });
 
 export const fetchCommentsAction = createAsyncThunk<
@@ -53,9 +71,14 @@ export const fetchCommentsAction = createAsyncThunk<
   number,
   { extra: AxiosInstance }
 >(Action.FetchComments, async (id, { extra: api }) => {
-  const { data } = await api.get<Comments>(`${ApiRoute.Comments}/${id}`);
+  try {
+    const { data } = await api.get<Comments>(`${ApiRoute.Comments}/${id}`);
 
-  return data;
+    return data;
+  } catch (err) {
+    toast.error('Error loading film comments');
+    throw new Error('Error loading film comments');
+  }
 });
 
 export const signInCheckAction = createAsyncThunk<
@@ -63,9 +86,20 @@ export const signInCheckAction = createAsyncThunk<
   undefined,
   { extra: AxiosInstance }
 >(Action.SignInCheck, async (_, { extra: api }) => {
-  const { data } = await api.get<User>(ApiRoute.SignIn);
+  try {
+    const { data } = await api.get<User>(ApiRoute.SignIn);
 
-  return data;
+    return data;
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      if (err.response?.status === 401) {
+        throw new Error('Unauthorized');
+      }
+    }
+
+    toast.error('Error signing you in');
+    throw new Error('Error signing you in');
+  }
 });
 
 export const signInAction = createAsyncThunk<
@@ -73,10 +107,15 @@ export const signInAction = createAsyncThunk<
   LoginData,
   { extra: AxiosInstance }
 >(Action.SignIn, async ({ email, password }, { extra: api }) => {
-  const { data } = await api.post<User>(ApiRoute.SignIn, { email, password });
+  try {
+    const { data } = await api.post<User>(ApiRoute.SignIn, { email, password });
 
-  setToken(data.token);
-  return data;
+    setToken(data.token);
+    return data;
+  } catch (err) {
+    toast.error('Error signing you in');
+    throw new Error('Error signing you in');
+  }
 });
 
 export const signOutAction = createAsyncThunk<
@@ -84,9 +123,14 @@ export const signOutAction = createAsyncThunk<
   undefined,
   { extra: AxiosInstance }
 >(Action.SignOut, async (_, { extra: api }) => {
-  await api.delete(ApiRoute.SignOut);
+  try {
+    await api.delete(ApiRoute.SignOut);
 
-  removeToken();
+    removeToken();
+  } catch (err) {
+    toast.error('Error signing you out');
+    throw new Error('Error signing you out');
+  }
 });
 
 export const fetchFavoriteFilmsAction = createAsyncThunk<
@@ -94,9 +138,14 @@ export const fetchFavoriteFilmsAction = createAsyncThunk<
   undefined,
   { extra: AxiosInstance }
 >(Action.FetchFavoriteFilms, async (_, { extra: api }) => {
-  const { data } = await api.get<Films>(ApiRoute.FavoriteFilms);
+  try {
+    const { data } = await api.get<Films>(ApiRoute.FavoriteFilms);
 
-  return data;
+    return data;
+  } catch (err) {
+    toast.error('Error loading favorite films');
+    throw new Error('Error loading favorite films');
+  }
 });
 
 export const chageFilmStatusAction = createAsyncThunk<
@@ -104,11 +153,16 @@ export const chageFilmStatusAction = createAsyncThunk<
   { filmid: number; status: 0 | 1 },
   { extra: AxiosInstance }
 >(Action.ChageFilmStatus, async ({ filmid, status }, { extra: api }) => {
-  const { data } = await api.post<FilmType>(
-    `${ApiRoute.FavoriteFilms}/${filmid}/${status}`
-  );
+  try {
+    const { data } = await api.post<FilmType>(
+      `${ApiRoute.FavoriteFilms}/${filmid}/${status}`
+    );
 
-  return data;
+    return data;
+  } catch (err) {
+    toast.error('Error changing film status');
+    throw new Error('Error changing film status');
+  }
 });
 
 export const postCommentAction = createAsyncThunk<
@@ -120,10 +174,18 @@ export const postCommentAction = createAsyncThunk<
   },
   { extra: AxiosInstance }
 >(Action.PostComment, async ({ comment, rating, filmId }, { extra: api }) => {
-  const { data } = await api.post<Comments>(`${ApiRoute.Comments}/${filmId}`, {
-    comment,
-    rating,
-  });
+  try {
+    const { data } = await api.post<Comments>(
+      `${ApiRoute.Comments}/${filmId}`,
+      {
+        comment,
+        rating,
+      }
+    );
 
-  return data;
+    return data;
+  } catch (err) {
+    toast.error('Error posting comment');
+    throw new Error('Error posting comment');
+  }
 });
