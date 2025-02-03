@@ -66,7 +66,7 @@ export default function AddReview(): JSX.Element {
     ).then((result) => {
       if ('error' in result) {
         setIsSubmitButtonDisabled(false);
-        throw new Error('Error posting comment');
+        return;
       }
 
       dispatch(redirectToRouteAction(`${AppRoute.Films}/${film.id}`));
@@ -125,7 +125,6 @@ export default function AddReview(): JSX.Element {
                 name='review-text'
                 id='review-text'
                 placeholder='Review text'
-                defaultValue={''}
                 minLength={50}
                 maxLength={400}
                 value={commentText}
