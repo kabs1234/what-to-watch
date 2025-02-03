@@ -14,7 +14,12 @@ export default function Player(): JSX.Element {
   const [activeControl, setActiveControl] = useState<'play' | 'pause'>('play');
   const [currentTime, setCurrentTime] = useState(0);
   const [videoDuration, setVideoDuration] = useState<number | null>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [videoProgress, setVideoProgress] = useState<number>(0);
+  const videoProgressWidth =
+    Math.max(
+      document.documentElement.clientWidth || 0,
+      window.innerWidth || 0
+    ) - 130;
 
   useEffect(() => {
     const videoPlayer = videoRef.current;
@@ -28,6 +33,10 @@ export default function Player(): JSX.Element {
     const handleTimeUpdate = () => {
       if (videoPlayer) {
         setCurrentTime(videoPlayer.currentTime);
+
+        setVideoProgress(
+          Math.round((videoPlayer.currentTime * 100) / videoPlayer.duration)
+        );
       }
     };
 
@@ -52,16 +61,17 @@ export default function Player(): JSX.Element {
 
   const controlPlayer = () => {
     const videoPlayer = videoRef.current;
-    if (activeControl === 'play') {
-      videoPlayer?.play();
-      setActiveControl('pause');
-      setIsPlaying(true); // Set isPlaying to true when video starts playing
-      return;
-    }
 
-    setActiveControl('play');
-    videoPlayer?.pause();
-    setIsPlaying(false); // Set isPlaying to false when video is paused
+    if (videoPlayer) {
+      if (activeControl === 'play') {
+        videoPlayer.play();
+        setActiveControl('pause');
+        return;
+      }
+
+      setActiveControl('play');
+      videoPlayer.pause();
+    }
   };
 
   return (
@@ -80,13 +90,22 @@ export default function Player(): JSX.Element {
         <div className='player__controls'>
           <div className='player__controls-row'>
             <div className='player__time'>
-              <progress className='player__progress' value={30} max={100} />
-              <div className='player__toggler' style={{ left: '30%' }}>
+              <progress
+                className='player__progress'
+                value={videoProgress}
+                max={100}
+              />
+              <div
+                className='player__toggler'
+                style={{
+                  left: videoProgress * (videoProgressWidth / 100),
+                }}
+              >
                 Toggler
               </div>
             </div>
             <div className='player__time-value'>
-              {getDisplayTime(videoDuration, currentTime, isPlaying)}
+              {getDisplayTime(videoDuration, currentTime)}
             </div>
           </div>
           <div className='player__controls-row'>

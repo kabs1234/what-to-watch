@@ -64,15 +64,10 @@ export const formatTime = (timeInSeconds: number): string =>
 
 export const getDisplayTime = (
   videoDuration: number | null,
-  currentTime: number,
-  isPlaying: boolean
+  currentTime: number
 ): string | null => {
   if (videoDuration === null) {
-    return null;
-  }
-
-  if (!isPlaying) {
-    return formatTime(videoDuration);
+    return formatTime(0);
   }
 
   const remainingTime = videoDuration - currentTime;
