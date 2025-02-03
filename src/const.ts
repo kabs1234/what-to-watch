@@ -4,6 +4,8 @@ export const STARTING_FILMS_COUNT = 8;
 
 export const ADDING_FILMS_COUNT = 8;
 
+export const MAX_GENRES_COUNT = 9;
+
 export const RATING_STARS_COUNT = 10;
 
 export enum Action {

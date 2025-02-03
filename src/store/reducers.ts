@@ -8,7 +8,7 @@ import {
   signOutAction,
 } from './thunks';
 import { setActiveGenreAction } from './actions';
-import { AuthorizationStatus } from '../const';
+import { AuthorizationStatus, MAX_GENRES_COUNT } from '../const';
 
 export type InitialState = {
   films: Films | null;
@@ -65,7 +65,10 @@ export const reducer = createReducer(initialState, (builder) => {
         const filmGenres = films.map((film: FilmType) => film.genre);
         filmGenres.unshift('All');
 
-        state.genres = Array.from(new Set(filmGenres));
+        state.genres = Array.from(new Set(filmGenres)).slice(
+          0,
+          MAX_GENRES_COUNT
+        );
 
         state.areOffersLoading = false;
         state.films = films;
