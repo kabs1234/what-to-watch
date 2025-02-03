@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchFilmAction } from '../../store/thunks';
 import { Films, FilmType } from '../../types/general';
 import FilmCard from '../../components/film-card/film-card';
@@ -10,14 +10,16 @@ import Loading from '../../components/loading/loading';
 import FullFilmInfo from '../../components/full-film/info/info';
 import Footer from '../../components/footer/footer';
 import MyListButton from '../../components/my-list-button/my-list-button';
-import { AppRoute } from '../../const';
+import { AppRoute, isAuthorized } from '../../const';
 import PlayFilmButton from '../../components/play-film-button/play-film-button';
+import { getAuthorizationStatus } from '../../store/selectors';
 
 export default function Film(): JSX.Element {
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const [film, setFilm] = useState<FilmType | null>(null);
   const [similarFilms, setSimilarFilms] = useState<Films | null>(null);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   useEffect(() => {
     dispatch(fetchFilmAction(Number(id))).then((result) => {
@@ -59,12 +61,14 @@ export default function Film(): JSX.Element {
               <div className='film-card__buttons'>
                 <PlayFilmButton filmId={film.id} />
                 <MyListButton film={film} setFilm={setFilm} />
-                <Link
-                  to={`${AppRoute.Films}/${film.id}/review`}
-                  className='btn film-card__button'
-                >
-                  Add review
-                </Link>
+                {isAuthorized(authorizationStatus) && (
+                  <Link
+                    to={`${AppRoute.Films}/${film.id}/review`}
+                    className='btn film-card__button'
+                  >
+                    Add review
+                  </Link>
+                )}
               </div>
             </div>
           </div>
