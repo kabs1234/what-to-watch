@@ -34,7 +34,7 @@ export default function Film(): JSX.Element {
     });
   }, [dispatch, id]);
 
-  if (!film || !similarFilms) {
+  if (!film || !similarFilms || film.id !== Number(id)) {
     return <Spinner />;
   }
 
