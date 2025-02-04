@@ -6,11 +6,11 @@ import { Films } from '../../types/general';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchFavoriteFilmsAction } from '../../store/thunks';
 import Loading from '../../components/loading/loading';
-import FilmCard from '../../components/film-card/film-card';
 import { getAuthorizationStatus } from '../../store/selectors';
 import { AppRoute, isAuthorized } from '../../const';
 import { redirectToRouteAction } from '../../store/actions';
 import UserBlock from '../../components/user-block/user-block';
+import FilmCard from '../../components/film-card/film-card';
 
 export default function MyList(): JSX.Element {
   const [favoriteFilms, setFavoriteFilms] = useState<Films | null>(null);

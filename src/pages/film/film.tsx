@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchFilmAction } from '../../store/thunks';
 import { Films, FilmType } from '../../types/general';
-import FilmCard from '../../components/film-card/film-card';
 import Header from '../../components/header/header';
 import Sprites from '../../components/sprites/sprites';
 import Loading from '../../components/loading/loading';
@@ -13,6 +12,7 @@ import MyListButton from '../../components/my-list-button/my-list-button';
 import { AppRoute, isAuthorized } from '../../const';
 import PlayFilmButton from '../../components/play-film-button/play-film-button';
 import { getAuthorizationStatus } from '../../store/selectors';
+import FilmCard from '../../components/film-card/film-card';
 
 export default function Film(): JSX.Element {
   const { id } = useParams();
