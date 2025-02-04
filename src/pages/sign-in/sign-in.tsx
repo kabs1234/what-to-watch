@@ -1,4 +1,4 @@
-import { SyntheticEvent, useEffect, useRef } from 'react';
+import { SyntheticEvent, useEffect, useRef, useState } from 'react';
 import Footer from '../../components/footer/footer';
 import Sprites from '../../components/sprites/sprites';
 import { isEmailValid, isPasswordValid } from '../../utils/general';
@@ -13,6 +13,9 @@ export default function SignIn(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const [formMessage, setFormMessage] = useState<string>('');
+  const [hasEmailError, setHasEmailError] = useState<boolean>();
+  const [isFormSubmitting, setIsFormSubmitting] = useState<boolean>(false);
 
   useEffect(() => {
     if (isAuthorized(authorizationStatus)) {
@@ -34,6 +37,10 @@ export default function SignIn(): JSX.Element {
     const passwordValue = passwordRef.current.value;
 
     if (isEmailValid(emailValue) && isPasswordValid(passwordValue)) {
+      setFormMessage('');
+      setHasEmailError(false);
+      setIsFormSubmitting(true);
+
       dispatch(
         signInAction({ email: emailValue, password: passwordValue })
       ).then((result) => {
@@ -43,6 +50,16 @@ export default function SignIn(): JSX.Element {
 
         navigate(AppRoute.Main);
       });
+    } else if (!isEmailValid(emailValue)) {
+      if (emailRef) {
+        setFormMessage('Please enter a valid email address');
+        setHasEmailError(true);
+      }
+    } else {
+      setHasEmailError(false);
+      setFormMessage(
+        'We can’t recognize this email and password combination. Please try again.'
+      );
     }
   };
 
@@ -62,8 +79,17 @@ export default function SignIn(): JSX.Element {
         </header>
         <div className='sign-in user-page__content'>
           <form className='sign-in__form' onSubmit={handleSignInButtonClick}>
+            {formMessage && (
+              <div className='sign-in__message'>
+                <p>{formMessage}</p>
+              </div>
+            )}
             <div className='sign-in__fields'>
-              <div className='sign-in__field'>
+              <div
+                className={`'sign-in__field ${
+                  hasEmailError ? 'sign-in__field--error' : ''
+                }`}
+              >
                 <input
                   className='sign-in__input'
                   type='email'
@@ -97,8 +123,12 @@ export default function SignIn(): JSX.Element {
               </div>
             </div>
             <div className='sign-in__submit'>
-              <button className='sign-in__btn' type='submit'>
-                Sign in
+              <button
+                className='sign-in__btn'
+                type='submit'
+                disabled={isFormSubmitting}
+              >
+                {isFormSubmitting ? 'Signing in...' : 'Sign in'}
               </button>
             </div>
           </form>
