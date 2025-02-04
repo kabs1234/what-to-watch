@@ -3,7 +3,6 @@ import Rating from '../../components/rating/rating';
 import Sprites from '../../components/sprites/sprites';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getAuthorizationStatus, getFilms } from '../../store/selectors';
-import Loading from '../../components/loading/loading';
 import NotFound from '../not-found/not-found';
 import { shadeColor } from '../../utils/general';
 import UserBlock from '../../components/user-block/user-block';
@@ -12,6 +11,7 @@ import { AppRoute, isAuthorized } from '../../const';
 import { SyntheticEvent, useState } from 'react';
 import { postCommentAction } from '../../store/thunks';
 import { redirectToRouteAction } from '../../store/actions';
+import Spinner from '../../components/spinner/spinner';
 
 export default function AddReview(): JSX.Element {
   const { id } = useParams();
@@ -33,7 +33,7 @@ export default function AddReview(): JSX.Element {
   }
 
   if (!allfilms) {
-    return <Loading />;
+    return <Spinner />;
   }
 
   const film = allfilms.find((element) => element.id === Number(id));

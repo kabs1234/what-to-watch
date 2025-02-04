@@ -5,7 +5,6 @@ import { fetchFilmAction } from '../../store/thunks';
 import { Films, FilmType } from '../../types/general';
 import Header from '../../components/header/header';
 import Sprites from '../../components/sprites/sprites';
-import Loading from '../../components/loading/loading';
 import FullFilmInfo from '../../components/full-film/info/info';
 import Footer from '../../components/footer/footer';
 import MyListButton from '../../components/my-list-button/my-list-button';
@@ -13,6 +12,7 @@ import { AppRoute, isAuthorized } from '../../const';
 import PlayFilmButton from '../../components/play-film-button/play-film-button';
 import { getAuthorizationStatus } from '../../store/selectors';
 import FilmCard from '../../components/film-card/film-card';
+import Spinner from '../../components/spinner/spinner';
 
 export default function Film(): JSX.Element {
   const { id } = useParams();
@@ -35,7 +35,7 @@ export default function Film(): JSX.Element {
   }, [dispatch, id]);
 
   if (!film || !similarFilms) {
-    return <Loading />;
+    return <Spinner />;
   }
 
   return (

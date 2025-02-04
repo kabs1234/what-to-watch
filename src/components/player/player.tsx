@@ -1,11 +1,11 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
 import { getFilms } from '../../store/selectors';
-import Loading from '../loading/loading';
 import NotFound from '../../pages/not-found/not-found';
 import Sprites from '../sprites/sprites';
 import { useEffect, useRef, useState } from 'react';
 import { getDisplayTime } from '../../utils/general';
+import Spinner from '../spinner/spinner';
 
 export default function Player(): JSX.Element {
   const { id } = useParams();
@@ -56,7 +56,7 @@ export default function Player(): JSX.Element {
   }, []);
 
   if (!allfilms) {
-    return <Loading />;
+    return <Spinner />;
   }
 
   const film = allfilms.find((element) => element.id === Number(id));

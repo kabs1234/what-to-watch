@@ -9,18 +9,18 @@ import {
   getAreFilmsLoading,
   getAuthorizationStatus,
 } from '../../store/selectors';
-import Loading from '../loading/loading';
 import Film from '../../pages/film/film';
 import PrivateRoute from '../private-route/private-route';
 import AddReview from '../../pages/add-review/add-review';
 import Player from '../player/player';
+import Spinner from '../spinner/spinner';
 
 function App(): JSX.Element {
   const areOffersLoading = useAppSelector(getAreFilmsLoading);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   if (areOffersLoading) {
-    return <Loading />;
+    return <Spinner />;
   }
 
   return (
