@@ -66,7 +66,7 @@ export default function Film(): JSX.Element {
               </p>
               <div className='film-card__buttons'>
                 <PlayFilmButton filmId={film.id} />
-                <MyListButton film={film} callback={changeFilmStatus} />
+                <MyListButton film={film} onSuccess={changeFilmStatus} />
                 {isAuthorized(authorizationStatus) && (
                   <Link
                     to={`${AppRoute.Films}/${film.id}/review`}

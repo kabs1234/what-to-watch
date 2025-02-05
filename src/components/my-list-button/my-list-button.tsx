@@ -8,12 +8,12 @@ import { getFilmStatus } from '../../utils/general';
 
 export type MyListButtonProps = {
   film: FilmType;
-  callback: () => void;
+  onSuccess: () => void;
 };
 
 export default function MyListButton({
   film,
-  callback,
+  onSuccess,
 }: MyListButtonProps): JSX.Element {
   const dispatch = useAppDispatch();
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
@@ -34,7 +34,7 @@ export default function MyListButton({
         throw new Error('Error adding into my list');
       }
 
-      callback();
+      onSuccess();
     });
   };
 

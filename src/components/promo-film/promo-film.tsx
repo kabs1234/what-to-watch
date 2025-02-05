@@ -44,7 +44,7 @@ export function PromoFilm(): JSX.Element | null {
             </p>
             <div className='film-card__buttons'>
               <PlayFilmButton filmId={promoFilm.id} />
-              <MyListButton film={promoFilm} callback={changeFilmStatus} />
+              <MyListButton film={promoFilm} onSuccess={changeFilmStatus} />
             </div>
           </div>
         </div>
