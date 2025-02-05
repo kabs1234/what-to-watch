@@ -1,14 +1,19 @@
-import { useState } from 'react';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getPromoFilm } from '../../store/selectors';
-import { FilmType } from '../../types/general';
 import Header from '../header/header';
 import MyListButton from '../my-list-button/my-list-button';
 import PlayFilmButton from '../play-film-button/play-film-button';
+import { changePromoFilmStatus } from '../../store/actions';
 
 export function PromoFilm(): JSX.Element | null {
+  const dispatch = useAppDispatch();
   const promoFilm = useAppSelector(getPromoFilm);
-  const [film, setFilm] = useState<FilmType | null>(promoFilm);
+
+  const changeFilmStatus = (): void => {
+    if (promoFilm) {
+      dispatch(changePromoFilmStatus());
+    }
+  };
 
   if (!promoFilm) {
     return null;
@@ -39,7 +44,7 @@ export function PromoFilm(): JSX.Element | null {
             </p>
             <div className='film-card__buttons'>
               <PlayFilmButton filmId={promoFilm.id} />
-              <MyListButton film={film} setFilm={setFilm} />
+              <MyListButton film={promoFilm} callback={changeFilmStatus} />
             </div>
           </div>
         </div>

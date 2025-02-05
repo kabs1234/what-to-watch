@@ -34,6 +34,12 @@ export default function Film(): JSX.Element {
     });
   }, [dispatch, id]);
 
+  const changeFilmStatus = (): void => {
+    if (film) {
+      setFilm({ ...film, isFavorite: !film.isFavorite });
+    }
+  };
+
   if (!film || !similarFilms || film.id !== Number(id)) {
     return <Spinner />;
   }
@@ -60,7 +66,7 @@ export default function Film(): JSX.Element {
               </p>
               <div className='film-card__buttons'>
                 <PlayFilmButton filmId={film.id} />
-                <MyListButton film={film} setFilm={setFilm} />
+                <MyListButton film={film} callback={changeFilmStatus} />
                 {isAuthorized(authorizationStatus) && (
                   <Link
                     to={`${AppRoute.Films}/${film.id}/review`}

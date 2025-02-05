@@ -7,7 +7,7 @@ import {
   signInCheckAction,
   signOutAction,
 } from './thunks';
-import { setActiveGenreAction } from './actions';
+import { changePromoFilmStatus, setActiveGenreAction } from './actions';
 import { AuthorizationStatus, MAX_GENRES_COUNT } from '../const';
 
 export type InitialState = {
@@ -32,6 +32,15 @@ const initialState: InitialState = {
 
 export const reducer = createReducer(initialState, (builder) => {
   builder
+    .addCase(changePromoFilmStatus, (state, action) => {
+      const promoFilm = state.promoFilm;
+      if (promoFilm) {
+        state.promoFilm = {
+          ...promoFilm,
+          isFavorite: !promoFilm.isFavorite,
+        };
+      }
+    })
     .addCase(setActiveGenreAction, (state, action: PayloadAction<string>) => {
       state.activeGenre = action.payload;
     })

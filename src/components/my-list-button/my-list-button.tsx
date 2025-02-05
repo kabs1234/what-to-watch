@@ -7,20 +7,16 @@ import { FilmType } from '../../types/general';
 import { getFilmStatus } from '../../utils/general';
 
 export type MyListButtonProps = {
-  film: FilmType | null;
-  setFilm: React.Dispatch<React.SetStateAction<FilmType | null>>;
+  film: FilmType;
+  callback: () => void;
 };
 
 export default function MyListButton({
   film,
-  setFilm,
-}: MyListButtonProps): JSX.Element | null {
+  callback,
+}: MyListButtonProps): JSX.Element {
   const dispatch = useAppDispatch();
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-
-  if (!film) {
-    return null;
-  }
 
   const handleMyListButtonClick = () => {
     if (!isAuthorized(authorizationStatus)) {
@@ -38,7 +34,7 @@ export default function MyListButton({
         throw new Error('Error adding into my list');
       }
 
-      setFilm({ ...film, isFavorite: !film.isFavorite });
+      callback();
     });
   };
 
