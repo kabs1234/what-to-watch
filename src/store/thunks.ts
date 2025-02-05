@@ -158,7 +158,7 @@ export const chageFilmStatusAction = createAsyncThunk<
   async ({ filmid, status }, { extra: api, dispatch }) => {
     try {
       const { data } = await api.post<FilmType>(
-        `${ApiRoute.FavoriteFilms}/${filmid}/${status}`
+        `${ApiRoute.FavoriteFilms}/${filmid}/${status}123`
       );
 
       return data;

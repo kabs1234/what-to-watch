@@ -39,15 +39,18 @@ export default function MyListButton({
         filmid: film.id,
         status: getFilmStatus(!film.isFavorite),
       })
-    ).then((result) => {
-      if ('error' in result) {
-        throw new Error('Error adding into my list');
-      }
+    )
+      .then((result) => {
+        if ('error' in result) {
+          return;
+        }
 
-      setisChangingStatus(false);
-      dispatch(changeFavoriteFilmsCount(result.payload.isFavorite ? 1 : 0));
-      onSuccess();
-    });
+        dispatch(changeFavoriteFilmsCount(result.payload.isFavorite ? 1 : 0));
+        onSuccess();
+      })
+      .finally(() => {
+        setisChangingStatus(false);
+      });
   };
 
   return (
