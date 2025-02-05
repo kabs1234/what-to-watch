@@ -14,3 +14,5 @@ export const getAuthorizationStatus = (state: State) =>
   state.authorizationStatus;
 
 export const getUser = (state: State) => state.user;
+
+export const getFavoriteFilmsCount = (state: State) => state.favoriteFilmsCount;

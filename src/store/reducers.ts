@@ -7,13 +7,18 @@ import {
   signInCheckAction,
   signOutAction,
 } from './thunks';
-import { changePromoFilmStatus, setActiveGenreAction } from './actions';
+import {
+  changeFavoriteFilmsCount,
+  changePromoFilmStatus,
+  setActiveGenreAction,
+} from './actions';
 import { AuthorizationStatus, MAX_GENRES_COUNT } from '../const';
 
 export type InitialState = {
   films: Films | null;
   promoFilm: FilmType | null;
   activeGenre: string;
+  favoriteFilmsCount: number | null;
   genres: string[] | null;
   areOffersLoading: boolean;
   authorizationStatus: AuthorizationStatus;
@@ -24,6 +29,7 @@ const initialState: InitialState = {
   films: null,
   promoFilm: null,
   activeGenre: 'All',
+  favoriteFilmsCount: null,
   genres: null,
   areOffersLoading: false,
   authorizationStatus: AuthorizationStatus.Unknown,
@@ -32,6 +38,18 @@ const initialState: InitialState = {
 
 export const reducer = createReducer(initialState, (builder) => {
   builder
+    .addCase(
+      changeFavoriteFilmsCount,
+      (state, action: PayloadAction<1 | 0>) => {
+        if (state.favoriteFilmsCount !== null) {
+          if (action.payload === 1) {
+            state.favoriteFilmsCount += 1;
+          } else {
+            state.favoriteFilmsCount -= 1;
+          }
+        }
+      }
+    )
     .addCase(changePromoFilmStatus, (state, action) => {
       const promoFilm = state.promoFilm;
       if (promoFilm) {
@@ -47,14 +65,26 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(signOutAction.fulfilled, (state, action) => {
       state.authorizationStatus = AuthorizationStatus.NotAuthorized;
       state.user = null;
+      state.favoriteFilmsCount = null;
+
+      const promoFilm = state.promoFilm;
+
+      if (promoFilm) {
+        state.promoFilm = {
+          ...promoFilm,
+          isFavorite: !promoFilm.isFavorite,
+        };
+      }
     })
     .addCase(signInAction.fulfilled, (state, action: PayloadAction<User>) => {
       state.authorizationStatus = AuthorizationStatus.Authorized;
       state.user = action.payload;
+      state.favoriteFilmsCount = 0;
     })
     .addCase(signInCheckAction.rejected, (state, action) => {
       state.authorizationStatus = AuthorizationStatus.NotAuthorized;
       state.user = null;
+      state.favoriteFilmsCount = null;
     })
     .addCase(
       signInCheckAction.fulfilled,
@@ -70,6 +100,9 @@ export const reducer = createReducer(initialState, (builder) => {
       fetchFilmsAction.fulfilled,
       (state, action: PayloadAction<Films>) => {
         const films = action.payload;
+
+        const favoriteFilms = films.filter((film) => film.isFavorite);
+        state.favoriteFilmsCount = favoriteFilms.length;
 
         const filmGenres = films.map((film: FilmType) => film.genre);
         filmGenres.unshift('All');

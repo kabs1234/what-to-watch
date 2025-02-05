@@ -10,3 +10,7 @@ export const redirectToRouteAction = createAction<string>(
 export const changePromoFilmStatus = createAction<void>(
   Action.ChangePromoFilmStatus
 );
+
+export const changeFavoriteFilmsCount = createAction<1 | 0>(
+  Action.ChangeFavoriteFilmsCount
+);

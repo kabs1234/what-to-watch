@@ -1,10 +1,16 @@
 import { toast } from 'react-toastify';
 import { isAuthorized } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getAuthorizationStatus } from '../../store/selectors';
+import {
+  getAuthorizationStatus,
+  getFavoriteFilmsCount,
+} from '../../store/selectors';
 import { chageFilmStatusAction } from '../../store/thunks';
 import { FilmType } from '../../types/general';
 import { getFilmStatus } from '../../utils/general';
+import { changeFavoriteFilmsCount } from '../../store/actions';
+import { useState } from 'react';
+import SpinnerDotted from '../spinner-dotted/spinner-dotted';
 
 export type MyListButtonProps = {
   film: FilmType;
@@ -17,6 +23,8 @@ export default function MyListButton({
 }: MyListButtonProps): JSX.Element {
   const dispatch = useAppDispatch();
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const favoriteFilmsCount = useAppSelector(getFavoriteFilmsCount);
+  const [isChangingStatus, setisChangingStatus] = useState<boolean>();
 
   const handleMyListButtonClick = () => {
     if (!isAuthorized(authorizationStatus)) {
@@ -24,16 +32,20 @@ export default function MyListButton({
       return;
     }
 
+    setisChangingStatus(true);
+
     dispatch(
       chageFilmStatusAction({
         filmid: film.id,
-        status: getFilmStatus(film.isFavorite),
+        status: getFilmStatus(!film.isFavorite),
       })
     ).then((result) => {
       if ('error' in result) {
         throw new Error('Error adding into my list');
       }
 
+      setisChangingStatus(false);
+      dispatch(changeFavoriteFilmsCount(result.payload.isFavorite ? 1 : 0));
       onSuccess();
     });
   };
@@ -43,11 +55,27 @@ export default function MyListButton({
       className='btn btn--list film-card__button'
       type='button'
       onClick={handleMyListButtonClick}
+      disabled={isChangingStatus}
     >
-      <svg viewBox='0 0 19 20' width={19} height={20}>
-        <use xlinkHref={film.isFavorite ? '#in-list' : '#add'} />
-      </svg>
-      <span>My list</span>
+      {isChangingStatus ? (
+        <SpinnerDotted />
+      ) : (
+        <svg viewBox='0 0 19 20' width={19} height={20}>
+          <use
+            xlinkHref={
+              film.isFavorite && isAuthorized(authorizationStatus)
+                ? '#in-list'
+                : '#add'
+            }
+          />
+        </svg>
+      )}
+      <span>
+        My list{' '}
+        {favoriteFilmsCount !== null && isAuthorized(authorizationStatus)
+          ? `(${favoriteFilmsCount})`
+          : null}
+      </span>
     </button>
   );
 }
