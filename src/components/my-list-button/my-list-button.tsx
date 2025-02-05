@@ -45,8 +45,16 @@ export default function MyListButton({
           return;
         }
 
-        dispatch(changeFavoriteFilmsCount(result.payload.isFavorite ? 1 : 0));
+        const isFilmFavorite = result.payload.isFavorite;
+
+        dispatch(changeFavoriteFilmsCount(isFilmFavorite ? 1 : 0));
         onSuccess();
+
+        if (isFilmFavorite) {
+          toast.success('Added film to my list');
+        } else {
+          toast.info('Removed film from my list');
+        }
       })
       .finally(() => {
         setisChangingStatus(false);
