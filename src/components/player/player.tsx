@@ -14,6 +14,7 @@ export default function Player(): JSX.Element {
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const [activeControl, setActiveControl] = useState<'play' | 'pause'>('play');
+  const [isVideoLoading, setIsVideoLoading] = useState<boolean>(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [videoDuration, setVideoDuration] = useState<number | null>(null);
   const [videoProgress, setVideoProgress] = useState<number>(0);
@@ -26,13 +27,21 @@ export default function Player(): JSX.Element {
   useEffect(() => {
     const videoPlayer = videoRef.current;
 
-    const handleLoadedMetadata = () => {
+    const handleLoadStart = (): void => {
+      setIsVideoLoading(true);
+    };
+
+    const handleLoadedData = (): void => {
+      setIsVideoLoading(false);
+    };
+
+    const handleLoadedMetadata = (): void => {
       if (videoPlayer) {
         setVideoDuration(videoPlayer.duration);
       }
     };
 
-    const handleTimeUpdate = () => {
+    const handleTimeUpdate = (): void => {
       if (videoPlayer) {
         setCurrentTime(videoPlayer.currentTime);
 
@@ -46,10 +55,14 @@ export default function Player(): JSX.Element {
       }
     };
 
+    videoPlayer?.addEventListener('loadstart', handleLoadStart);
+    videoPlayer?.addEventListener('loadeddata', handleLoadedData);
     videoPlayer?.addEventListener('loadedmetadata', handleLoadedMetadata);
     videoPlayer?.addEventListener('timeupdate', handleTimeUpdate);
 
     return () => {
+      videoPlayer?.removeEventListener('loadstart', handleLoadStart);
+      videoPlayer?.removeEventListener('canplay', handleLoadedData);
       videoPlayer?.removeEventListener('loadedmetadata', handleLoadedMetadata);
       videoPlayer?.removeEventListener('timeupdate', handleTimeUpdate);
     };
@@ -68,15 +81,15 @@ export default function Player(): JSX.Element {
   const controlPlayer = (): void => {
     const videoPlayer = videoRef.current;
 
-    if (videoPlayer) {
+    if (videoPlayer && !isVideoLoading) {
       if (activeControl === 'play') {
-        videoPlayer.play();
+        videoPlayer?.play();
         setActiveControl('pause');
         return;
       }
 
       setActiveControl('play');
-      videoPlayer.pause();
+      videoPlayer?.pause();
     }
   };
 
@@ -88,6 +101,7 @@ export default function Player(): JSX.Element {
     <>
       <Sprites />
       <div className='player'>
+        {isVideoLoading && <Spinner />}
         <video src={film.videoLink} className='player__video' ref={videoRef} />
         <button
           type='button'
