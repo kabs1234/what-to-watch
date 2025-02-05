@@ -1,7 +1,7 @@
 import * as dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
-import { Fragment } from 'react';
 import { FilmType } from '../../../types/general';
+import StarringList from '../starring-list/starring-list';
 dayjs.extend(duration);
 
 export default function FullFilmDetails({
@@ -26,17 +26,7 @@ export default function FullFilmDetails({
         <p className='film-card__details-item'>
           <strong className='film-card__details-name'>Starring</strong>
           <span className='film-card__details-value'>
-            {film.starring.map((actor, index) => {
-              if (index + 1 !== film.starring.length) {
-                return (
-                  <Fragment key={actor}>
-                    {actor}, <br />
-                  </Fragment>
-                );
-              } else {
-                return actor;
-              }
-            })}
+            <StarringList starringActors={film.starring} />
           </span>
         </p>
       </div>
