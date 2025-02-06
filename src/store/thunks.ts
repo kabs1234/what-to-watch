@@ -48,7 +48,7 @@ export const fetchFilmAction = createAsyncThunk<
   { extra: AxiosInstance }
 >(Action.FetchFilm, async (id, { extra: api }) => {
   try {
-    const film = await api.get<FilmType>(`${ApiRoute.Films}/${id}`);
+    const film = await api.get<FilmType>(`${ApiRoute.Films}/${id}fff`);
     const similarFilms = await api.get<Films>(
       `${ApiRoute.Films}/${id}/similar`
     );

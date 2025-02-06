@@ -13,18 +13,21 @@ import PlayFilmButton from '../../components/play-film-button/play-film-button';
 import { getAuthorizationStatus } from '../../store/selectors';
 import FilmCard from '../../components/film-card/film-card';
 import Spinner from '../../components/spinner/spinner';
+import FilmTryAgain from '../film-try-again/film-try-again';
 
 export default function Film(): JSX.Element {
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const [film, setFilm] = useState<FilmType | null>(null);
   const [similarFilms, setSimilarFilms] = useState<Films | null>(null);
+  const [isFilmFetchFailed, setIsFilmFetchFailed] = useState<boolean>(false);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   useEffect(() => {
     dispatch(fetchFilmAction(Number(id))).then((result) => {
       if ('error' in result) {
-        throw new Error('error loading film');
+        setIsFilmFetchFailed(true);
+        return;
       }
 
       const fullFilm = result.payload;
@@ -39,6 +42,10 @@ export default function Film(): JSX.Element {
       setFilm({ ...film, isFavorite: !film.isFavorite });
     }
   };
+
+  if (isFilmFetchFailed) {
+    return <FilmTryAgain filmId={Number(id)} />;
+  }
 
   if (!film || !similarFilms || film.id !== Number(id)) {
     return <Spinner />;
