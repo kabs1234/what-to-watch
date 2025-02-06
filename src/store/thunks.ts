@@ -1,9 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosInstance } from 'axios';
-import { Action, ApiRoute } from '../const';
+import { Action, ApiRoute, AppRoute } from '../const';
 import { Comments, Films, FilmType, LoginData, User } from '../types/general';
 import { removeToken, setToken } from '../utils/general';
 import { toast } from 'react-toastify';
+import { AppDispatch } from '../types/store';
+import { redirectToRouteAction } from './actions';
 
 export const fetchFilmsAction = createAsyncThunk<
   Films,
@@ -104,12 +106,13 @@ export const signInCheckAction = createAsyncThunk<
 export const signInAction = createAsyncThunk<
   User,
   LoginData,
-  { extra: AxiosInstance }
->(Action.SignIn, async ({ email, password }, { extra: api }) => {
+  { extra: AxiosInstance; dispatch: AppDispatch }
+>(Action.SignIn, async ({ email, password }, { extra: api, dispatch }) => {
   try {
-    const { data } = await api.post<User>(ApiRoute.SignIn, { email, password });
+    const { data } = await api.post<User>(AppRoute.SignIn, { email, password });
 
     setToken(data.token);
+    dispatch(redirectToRouteAction(AppRoute.Main));
     return data;
   } catch (err) {
     toast.error('Error signing you in');

@@ -4,14 +4,13 @@ import Sprites from '../../components/sprites/sprites';
 import { isEmailValid, isPasswordValid } from '../../utils/general';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { signInAction } from '../../store/thunks';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { AppRoute, isAuthorized } from '../../const';
 import { getAuthorizationStatus } from '../../store/selectors';
 import { redirectToRouteAction } from '../../store/actions';
 
 export default function SignIn(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [formMessage, setFormMessage] = useState<string>('');
   const [hasEmailError, setHasEmailError] = useState<boolean>();
@@ -43,18 +42,10 @@ export default function SignIn(): JSX.Element {
 
       dispatch(
         signInAction({ email: emailValue, password: passwordValue })
-      ).then((result) => {
-        if ('error' in result) {
-          throw new Error('Error signing in');
-        }
-
-        navigate(AppRoute.Main);
-      });
+      ).finally(() => setIsFormSubmitting(false));
     } else if (!isEmailValid(emailValue)) {
-      if (emailRef) {
-        setFormMessage('Please enter a valid email address');
-        setHasEmailError(true);
-      }
+      setFormMessage('Please enter a valid email address');
+      setHasEmailError(true);
     } else {
       setHasEmailError(false);
       setFormMessage(
