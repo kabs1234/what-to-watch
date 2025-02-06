@@ -1,14 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosInstance } from 'axios';
 import { Action, ApiRoute } from '../const';
-import {
-  Comments,
-  Films,
-  FilmType,
-  FullFilm,
-  LoginData,
-  User,
-} from '../types/general';
+import { Comments, Films, FilmType, LoginData, User } from '../types/general';
 import { removeToken, setToken } from '../utils/general';
 import { toast } from 'react-toastify';
 
@@ -43,26 +36,32 @@ export const fetchPromoFilm = createAsyncThunk<
 });
 
 export const fetchFilmAction = createAsyncThunk<
-  FullFilm,
+  FilmType,
   number,
   { extra: AxiosInstance }
 >(Action.FetchFilm, async (id, { extra: api }) => {
   try {
-    const film = await api.get<FilmType>(`${ApiRoute.Films}/${id}fff`);
-    const similarFilms = await api.get<Films>(
-      `${ApiRoute.Films}/${id}/similar`
-    );
+    const { data } = await api.get<FilmType>(`${ApiRoute.Films}/${id}`);
 
-    const filmData = film.data;
-    const similarFilmsData = similarFilms.data;
-
-    return {
-      film: filmData,
-      similarFilms: similarFilmsData,
-    };
+    return data;
   } catch (err) {
     toast.error('Error loading film');
     throw new Error('Error loading film');
+  }
+});
+
+export const fetchSimilarFilmsAction = createAsyncThunk<
+  Films,
+  number,
+  { extra: AxiosInstance }
+>(Action.FetchSimilarFilms, async (id, { extra: api }) => {
+  try {
+    const { data } = await api.get<Films>(`${ApiRoute.Films}/${id}/similar`);
+
+    return data;
+  } catch (err) {
+    toast.error('Error loading similar films');
+    throw new Error('Error loading similar films');
   }
 });
 

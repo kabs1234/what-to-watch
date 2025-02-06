@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchFilmAction } from '../../store/thunks';
+import { fetchFilmAction, fetchSimilarFilmsAction } from '../../store/thunks';
 import { Films, FilmType } from '../../types/general';
 import Header from '../../components/header/header';
 import Sprites from '../../components/sprites/sprites';
@@ -14,6 +14,7 @@ import { getAuthorizationStatus } from '../../store/selectors';
 import FilmCard from '../../components/film-card/film-card';
 import Spinner from '../../components/spinner/spinner';
 import FilmTryAgain from '../film-try-again/film-try-again';
+import { unwrapResult } from '@reduxjs/toolkit';
 
 export default function Film(): JSX.Element {
   const { id } = useParams();
@@ -24,17 +25,29 @@ export default function Film(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   useEffect(() => {
-    dispatch(fetchFilmAction(Number(id))).then((result) => {
-      if ('error' in result) {
+    const fetchFilm = async (): Promise<void> => {
+      try {
+        const fetchedFilm = await dispatch(fetchFilmAction(Number(id)));
+        const filmData = unwrapResult(fetchedFilm);
+
+        setFilm(filmData);
+      } catch (err) {
         setIsFilmFetchFailed(true);
-        return;
       }
+    };
 
-      const fullFilm = result.payload;
+    const fetchSimilarFilms = async (): Promise<void> => {
+      const fetchedSimilarFilms = await dispatch(
+        fetchSimilarFilmsAction(Number(id))
+      );
 
-      setFilm(fullFilm.film);
-      setSimilarFilms(fullFilm.similarFilms);
-    });
+      const similarFilmsData = fetchedSimilarFilms.payload as Films;
+
+      setSimilarFilms(similarFilmsData);
+    };
+
+    fetchFilm();
+    fetchSimilarFilms();
   }, [dispatch, id]);
 
   const changeFilmStatus = (): void => {
@@ -47,7 +60,7 @@ export default function Film(): JSX.Element {
     return <FilmTryAgain filmId={Number(id)} />;
   }
 
-  if (!film || !similarFilms || film.id !== Number(id)) {
+  if (!film || film.id !== Number(id)) {
     return <Spinner />;
   }
 
@@ -88,17 +101,20 @@ export default function Film(): JSX.Element {
         </div>
         <FullFilmInfo film={film} />
       </section>
-      <div className='page-content'>
-        <section className='catalog catalog--like-this'>
-          <h2 className='catalog__title'>More like this</h2>
-          <div className='catalog__films-list'>
-            {similarFilms.slice(0, 4).map((similarFilm) => (
-              <FilmCard key={similarFilm.name} film={similarFilm} />
-            ))}
-          </div>
-        </section>
-        <Footer />
-      </div>
+
+      {similarFilms && (
+        <div className='page-content'>
+          <section className='catalog catalog--like-this'>
+            <h2 className='catalog__title'>More like this</h2>
+            <div className='catalog__films-list'>
+              {similarFilms.slice(0, 4).map((similarFilm) => (
+                <FilmCard key={similarFilm.name} film={similarFilm} />
+              ))}
+            </div>
+          </section>
+          <Footer />
+        </div>
+      )}
     </div>
   );
 }

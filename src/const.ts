@@ -16,6 +16,7 @@ export enum Action {
   FetchFilms = 'api/fetchFilms',
   FetchPromoFilm = 'api/fetchPromoFilm',
   FetchFilm = 'api/fetchFilm',
+  FetchSimilarFilms = 'api/FetchsimilarFilms',
   FetchComments = 'api/fetchComments',
   FetchFavoriteFilms = 'api/fetchFavoriteFilms',
   SignIn = 'api/signIn',
