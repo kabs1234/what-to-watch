@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import './film-try-again.css'; // Import a CSS file for styling
+import './film-try-again.css';
 
 export default function FilmTryAgain({
   filmId,
