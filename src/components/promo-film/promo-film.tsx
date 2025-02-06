@@ -5,7 +5,7 @@ import MyListButton from '../my-list-button/my-list-button';
 import PlayFilmButton from '../play-film-button/play-film-button';
 import { changePromoFilmStatus } from '../../store/actions';
 
-export function PromoFilm(): JSX.Element | null {
+export function PromoFilm(): JSX.Element {
   const dispatch = useAppDispatch();
   const promoFilm = useAppSelector(getPromoFilm);
 
@@ -16,7 +16,11 @@ export function PromoFilm(): JSX.Element | null {
   };
 
   if (!promoFilm) {
-    return null;
+    return (
+      <section className='film-card' style={{ background: '#0C0101' }}>
+        <Header />
+      </section>
+    );
   }
 
   return (
