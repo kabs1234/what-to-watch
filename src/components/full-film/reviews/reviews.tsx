@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import FullFilmReview from '../review/review';
 import { Comments } from '../../../types/general';
 import { useAppDispatch } from '../../../hooks';
@@ -10,19 +10,42 @@ export default function FullFilmReviews({
   filmId: number;
 }): JSX.Element {
   const [comments, setComments] = useState<Comments | null>(null);
+  const [isCommentsFetchFailed, setIsCommentsFetchFailed] =
+    useState<boolean>(false);
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
+  const fetchComments = useCallback(() => {
     dispatch(fetchCommentsAction(filmId)).then((result) => {
-      if ('result' in result) {
-        throw new Error('Error loading comments');
+      if ('error' in result) {
+        setIsCommentsFetchFailed(true);
+        return;
       }
 
-      const fetchedComments = result.payload as Comments;
+      const fetchedComments = result.payload;
 
       setComments(fetchedComments);
     });
   }, [dispatch, filmId]);
+
+  useEffect(() => {
+    fetchComments();
+  }, [fetchComments]);
+
+  const handleTryAgainButtonClick = () => {
+    fetchComments();
+    setIsCommentsFetchFailed(false);
+  };
+
+  if (isCommentsFetchFailed) {
+    return (
+      <>
+        <p style={{ color: '#000' }}>
+          Sorry, we were unable to load the comments due to network issues.
+        </p>
+        <button onClick={handleTryAgainButtonClick}>Try again</button>
+      </>
+    );
+  }
 
   if (!comments) {
     return <p style={{ color: '#000' }}>Loading Comments...</p>;
