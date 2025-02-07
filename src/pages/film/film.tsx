@@ -13,8 +13,8 @@ import PlayFilmButton from '../../components/play-film-button/play-film-button';
 import { getAuthorizationStatus } from '../../store/selectors';
 import FilmCard from '../../components/film-card/film-card';
 import Spinner from '../../components/spinner/spinner';
-import FilmTryAgain from '../film-try-again/film-try-again';
 import { unwrapResult } from '@reduxjs/toolkit';
+import TryAgain from '../try-again/try-again';
 
 export default function Film(): JSX.Element {
   const { id } = useParams();
@@ -56,12 +56,17 @@ export default function Film(): JSX.Element {
     }
   };
 
-  if (isFilmFetchFailed) {
-    return <FilmTryAgain filmId={Number(id)} />;
-  }
-
   if (!film || film.id !== Number(id)) {
     return <Spinner />;
+  }
+
+  if (isFilmFetchFailed) {
+    return (
+      <TryAgain
+        pageLink={`${AppRoute.Films}/${film.id}`}
+        errorMessage='Something went wrong loading film...'
+      />
+    );
   }
 
   return (

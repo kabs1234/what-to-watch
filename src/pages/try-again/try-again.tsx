@@ -1,20 +1,21 @@
 import { useNavigate } from 'react-router-dom';
-import { AppRoute } from '../../const';
-import './film-try-again.css';
+import './try-again.css';
 
-export default function FilmTryAgain({
-  filmId,
+export default function TryAgain({
+  errorMessage,
+  pageLink,
 }: {
-  filmId: number;
+  errorMessage: string;
+  pageLink: string;
 }): JSX.Element {
   const navigate = useNavigate();
 
   return (
-    <div className='film-try-again-container'>
+    <div className='try-again-container'>
       <p className='error-message'>
-        <b>Something went wrong loading film...</b>
+        <b>{errorMessage}</b>
       </p>
-      <a href={`${AppRoute.Films}/${filmId}`} className='try-again-link'>
+      <a href={pageLink} className='try-again-link'>
         Try again
       </a>
       <button
