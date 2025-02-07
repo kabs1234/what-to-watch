@@ -98,8 +98,8 @@ export const signInCheckAction = createAsyncThunk<
       }
     }
 
-    toast.error('Error signing you in');
-    throw new Error('Error signing you in');
+    toast.error('Error checking sign in status');
+    throw new Error('Error checking sign in status');
   }
 });
 
