@@ -15,7 +15,10 @@ export default function PrivateRoute({
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (!isAuthorized(authorizationStatus)) {
+    if (
+      !isAuthorized(authorizationStatus) &&
+      authorizationStatus !== AuthorizationStatus.Unknown
+    ) {
       dispatch(redirectToRouteAction(AppRoute.SignIn));
     }
   }, [authorizationStatus, dispatch]);

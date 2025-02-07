@@ -1,40 +1,42 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Footer from '../../components/footer/footer';
 import Logo from '../../components/logo/logo';
 import Sprites from '../../components/sprites/sprites';
 import { Films } from '../../types/general';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppDispatch } from '../../hooks';
 import { fetchFavoriteFilmsAction } from '../../store/thunks';
-import { getAuthorizationStatus } from '../../store/selectors';
-import { AppRoute, isAuthorized } from '../../const';
-import { redirectToRouteAction } from '../../store/actions';
+import { AppRoute } from '../../const';
 import UserBlock from '../../components/user-block/user-block';
 import FilmCard from '../../components/film-card/film-card';
 import Spinner from '../../components/spinner/spinner';
+import TryAgain from '../try-again/try-again';
 
 export default function MyList(): JSX.Element {
   const [favoriteFilms, setFavoriteFilms] = useState<Films | null>(null);
+  const [isFetchFailed, setIsFetchFailed] = useState<boolean>(false);
   const dispatch = useAppDispatch();
-  const hasFetched = useRef(false);
-  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   useEffect(() => {
-    if (!isAuthorized(authorizationStatus)) {
-      dispatch(redirectToRouteAction(AppRoute.SignIn));
-      return;
-    }
-
-    if (!hasFetched.current) {
-      hasFetched.current = true;
+    if (!isFetchFailed) {
       dispatch(fetchFavoriteFilmsAction()).then((result) => {
         if ('error' in result) {
-          throw new Error('Error loading favorite films');
+          setIsFetchFailed(true);
+          return;
         }
 
         setFavoriteFilms(result.payload);
       });
     }
-  });
+  }, [dispatch, isFetchFailed]);
+
+  if (isFetchFailed) {
+    return (
+      <TryAgain
+        pageLink={AppRoute.MyList}
+        errorMessage='Something went wrong loading your film list...'
+      />
+    );
+  }
 
   if (!favoriteFilms) {
     return <Spinner />;
