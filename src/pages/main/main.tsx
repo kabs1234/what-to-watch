@@ -4,15 +4,25 @@ import GenresList from '../../components/genres-list/genres-list';
 import FilmsList from '../../components/films-list/films-list';
 import Footer from '../../components/footer/footer';
 import { useAppSelector } from '../../hooks';
-import { getActiveGenre, getFilms } from '../../store/selectors';
+import {
+  getActiveGenre,
+  getFilms,
+  getIsFilmsFetchFailed,
+} from '../../store/selectors';
 import { useEffect, useState } from 'react';
 import { ADDING_FILMS_COUNT, STARTING_FILMS_COUNT } from '../../const';
+import MainEmpty from '../main-empty/main-empty';
 
 export default function Main(): JSX.Element {
   const activeGenre = useAppSelector(getActiveGenre);
+  const isFilmsFetchFailed = useAppSelector(getIsFilmsFetchFailed);
   const films = useAppSelector(getFilms) ?? [];
   const [shownFilmsCount, setShownFilmsCount] =
     useState<number>(STARTING_FILMS_COUNT);
+
+  useEffect(() => {
+    setShownFilmsCount(STARTING_FILMS_COUNT);
+  }, [activeGenre]);
 
   const filteredFilms =
     activeGenre !== 'All'
@@ -25,9 +35,9 @@ export default function Main(): JSX.Element {
     setShownFilmsCount((prev) => prev + ADDING_FILMS_COUNT);
   };
 
-  useEffect(() => {
-    setShownFilmsCount(STARTING_FILMS_COUNT);
-  }, [activeGenre]);
+  if (isFilmsFetchFailed) {
+    return <MainEmpty />;
+  }
 
   return (
     <>

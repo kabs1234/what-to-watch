@@ -21,6 +21,7 @@ export type InitialState = {
   favoriteFilmsCount: number | null;
   genres: string[] | null;
   areOffersLoading: boolean;
+  isFilmsFetchFailed: boolean;
   authorizationStatus: AuthorizationStatus;
   user: User | null;
 };
@@ -32,6 +33,7 @@ const initialState: InitialState = {
   favoriteFilmsCount: null,
   genres: null,
   areOffersLoading: false,
+  isFilmsFetchFailed: false,
   authorizationStatus: AuthorizationStatus.Unknown,
   user: null,
 };
@@ -116,6 +118,10 @@ export const reducer = createReducer(initialState, (builder) => {
         state.films = films;
       }
     )
+    .addCase(fetchFilmsAction.rejected, (state, action) => {
+      state.areOffersLoading = false;
+      state.isFilmsFetchFailed = true;
+    })
     .addCase(
       fetchPromoFilm.fulfilled,
       (state, action: PayloadAction<FilmType>) => {
