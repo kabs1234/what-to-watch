@@ -102,8 +102,8 @@ export default function Film(): JSX.Element {
         <FullFilmInfo film={film} />
       </section>
 
-      {similarFilms && (
-        <div className='page-content'>
+      <div className='page-content'>
+        {similarFilms && (
           <section className='catalog catalog--like-this'>
             <h2 className='catalog__title'>More like this</h2>
             <div className='catalog__films-list'>
@@ -112,9 +112,9 @@ export default function Film(): JSX.Element {
               ))}
             </div>
           </section>
-          <Footer />
-        </div>
-      )}
+        )}
+        <Footer />
+      </div>
     </div>
   );
 }
