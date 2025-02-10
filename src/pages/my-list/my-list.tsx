@@ -50,6 +50,13 @@ export default function MyList(): JSX.Element {
         <section className='catalog'>
           <h2 className='catalog__title visually-hidden'>Catalog</h2>
           <div className='catalog__films-list'>
+            {favoriteFilms.length === 0 && (
+              <p>
+                The List is empty. <br />
+                Try to press my list button on some films, they will appear
+                here:)
+              </p>
+            )}
             {favoriteFilms.map((film) => (
               <FilmCard key={film.id} film={film} />
             ))}
