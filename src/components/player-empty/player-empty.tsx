@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router-dom';
 import PlayerControls from '../player-controls/player-controls';
 import Sprites from '../sprites/sprites';
 import './player-empty.css';
-import { AppRoute } from '../../const';
 
 export default function PlayerEmpty(): JSX.Element {
   const navigate = useNavigate();
@@ -41,7 +40,7 @@ export default function PlayerEmpty(): JSX.Element {
         <button
           type='button'
           className='player__exit'
-          onClick={() => navigate(AppRoute.Main)}
+          onClick={() => navigate(-1)}
         >
           Exit
         </button>
