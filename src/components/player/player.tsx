@@ -38,7 +38,7 @@ export default function Player(): JSX.Element {
   const handleControlButtonClick = (): void => {
     const videoPlayer = videoRef.current;
 
-    if (videoPlayer && !isVideoLoading) {
+    if (videoPlayer) {
       if (activeControl === 'play') {
         videoPlayer.play();
         setActiveControl('pause');
@@ -56,7 +56,6 @@ export default function Player(): JSX.Element {
 
   const {
     activeControl,
-    isVideoLoading,
     currentTime,
     videoDuration,
     videoProgress,
@@ -79,7 +78,6 @@ export default function Player(): JSX.Element {
     <>
       <Sprites />
       <div className='player'>
-        {isVideoLoading && <Spinner />}
         <video src={videoLink} className='player__video' ref={videoRef} />
         <button
           type='button'

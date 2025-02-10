@@ -5,7 +5,6 @@ export default function useVideo(
   videoLink: string | null
 ) {
   const [activeControl, setActiveControl] = useState<'play' | 'pause'>('play');
-  const [isVideoLoading, setIsVideoLoading] = useState<boolean>(false);
   const [currentTime, setCurrentTime] = useState<number>(0);
   const [videoDuration, setVideoDuration] = useState<number | null>(null);
   const [videoProgress, setVideoProgress] = useState<number>(0);
@@ -16,14 +15,6 @@ export default function useVideo(
     if (!videoPlayer) {
       return;
     }
-
-    const handleLoadStart = (): void => {
-      setIsVideoLoading(true);
-    };
-
-    const handleLoadedData = (): void => {
-      setIsVideoLoading(false);
-    };
 
     const handleLoadedMetadata = (): void => {
       if (videoPlayer) {
@@ -45,14 +36,10 @@ export default function useVideo(
       }
     };
 
-    videoPlayer?.addEventListener('loadstart', handleLoadStart);
-    videoPlayer?.addEventListener('loadeddata', handleLoadedData);
     videoPlayer?.addEventListener('loadedmetadata', handleLoadedMetadata);
     videoPlayer?.addEventListener('timeupdate', handleTimeUpdate);
 
     return () => {
-      videoPlayer?.removeEventListener('loadstart', handleLoadStart);
-      videoPlayer?.removeEventListener('canplay', handleLoadedData);
       videoPlayer?.removeEventListener('loadedmetadata', handleLoadedMetadata);
       videoPlayer?.removeEventListener('timeupdate', handleTimeUpdate);
     };
@@ -60,7 +47,6 @@ export default function useVideo(
 
   return {
     activeControl,
-    isVideoLoading,
     currentTime,
     videoDuration,
     videoProgress,
