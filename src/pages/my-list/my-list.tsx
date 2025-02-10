@@ -5,7 +5,6 @@ import Sprites from '../../components/sprites/sprites';
 import { Films } from '../../types/general';
 import { useAppDispatch } from '../../hooks';
 import { fetchFavoriteFilmsAction } from '../../store/thunks';
-import { AppRoute } from '../../const';
 import UserBlock from '../../components/user-block/user-block';
 import FilmCard from '../../components/film-card/film-card';
 import Spinner from '../../components/spinner/spinner';
@@ -31,10 +30,7 @@ export default function MyList(): JSX.Element {
 
   if (isFetchFailed) {
     return (
-      <TryAgain
-        pageLink={AppRoute.MyList}
-        errorMessage='Something went wrong loading your film list...'
-      />
+      <TryAgain errorMessage='Something went wrong loading your film list...' />
     );
   }
 

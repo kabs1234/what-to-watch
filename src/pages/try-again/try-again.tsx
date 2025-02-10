@@ -3,10 +3,8 @@ import './try-again.css';
 
 export default function TryAgain({
   errorMessage,
-  pageLink,
 }: {
   errorMessage: string;
-  pageLink: string;
 }): JSX.Element {
   const navigate = useNavigate();
 
@@ -15,9 +13,9 @@ export default function TryAgain({
       <p className='error-message'>
         <b>{errorMessage}</b>
       </p>
-      <a href={pageLink} className='try-again-link'>
+      <button className='try-again-link' onClick={() => navigate(0)}>
         Try again
-      </a>
+      </button>
       <button
         onClick={() => {
           navigate(-1);

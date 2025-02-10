@@ -56,17 +56,12 @@ export default function Film(): JSX.Element {
     }
   };
 
-  if (!film || film.id !== Number(id)) {
-    return <Spinner />;
+  if (isFilmFetchFailed) {
+    return <TryAgain errorMessage='Something went wrong loading film...' />;
   }
 
-  if (isFilmFetchFailed) {
-    return (
-      <TryAgain
-        pageLink={`${AppRoute.Films}/${film.id}`}
-        errorMessage='Something went wrong loading film...'
-      />
-    );
+  if (!film || film.id !== Number(id)) {
+    return <Spinner />;
   }
 
   return (

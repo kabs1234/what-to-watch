@@ -17,9 +17,11 @@
 
 .try-again-link {
   font-size: 1.2rem;
-  color: #007bff;
-  text-decoration: none;
   margin-bottom: 20px;
+  border: none;
+  color: #007bff;
+  background-color: transparent;
+  text-decoration: none;
 }
 
 .try-again-link:hover {
