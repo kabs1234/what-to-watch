@@ -1,0 +1,46 @@
+.player__error {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.player__error-message {
+  margin: 0;
+  margin-bottom: 38px;
+  text-align: center;
+}
+
+.player__try-again {
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 249, 217, .12);
+  -webkit-transition: .2s -webkit-transform;
+  transition: .2s -webkit-transform;
+  transition: .2s transform;
+  transition: .2s transform, .2s -webkit-transform;
+}
+
+.player__try-again:hover {
+  transform: scale(1.1);
+}
+
+.player__try-again:active {
+  background: rgba(255, 249, 217, .07);
+}
+
+.player__try-again:active path {
+  fill: #e6d993;
+}
+
+.player__try-icon {
+  transform: scale(2);
+}
