@@ -5,7 +5,7 @@ import { Comments, Films, FilmType, LoginData, User } from '../types/general';
 import { removeToken, setToken } from '../utils/general';
 import { toast } from 'react-toastify';
 import { AppDispatch } from '../types/store';
-import { redirectToRouteAction } from './actions';
+import { redirectToRouteAction, replaceFilmInfoAction } from './actions';
 
 export const fetchFilmsAction = createAsyncThunk<
   Films,
@@ -153,19 +153,23 @@ export const fetchFavoriteFilmsAction = createAsyncThunk<
 export const chageFilmStatusAction = createAsyncThunk<
   FilmType,
   { filmid: number; status: 0 | 1 },
-  { extra: AxiosInstance }
->(Action.ChageFilmStatus, async ({ filmid, status }, { extra: api }) => {
-  try {
-    const { data } = await api.post<FilmType>(
-      `${ApiRoute.FavoriteFilms}/${filmid}/${status}`
-    );
+  { extra: AxiosInstance; dispatch: AppDispatch }
+>(
+  Action.ChageFilmStatus,
+  async ({ filmid, status }, { extra: api, dispatch }) => {
+    try {
+      const { data } = await api.post<FilmType>(
+        `${ApiRoute.FavoriteFilms}/${filmid}/${status}`
+      );
 
-    return data;
-  } catch (err) {
-    toast.error('Error changing film status');
-    throw new Error('Error changing film status');
+      dispatch(replaceFilmInfoAction(data));
+      return data;
+    } catch (err) {
+      toast.error('Error changing film status');
+      throw new Error('Error changing film status');
+    }
   }
-});
+);
 
 export const postCommentAction = createAsyncThunk<
   Comments,

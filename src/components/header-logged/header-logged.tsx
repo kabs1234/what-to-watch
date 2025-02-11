@@ -3,12 +3,19 @@ import { AppRoute } from '../../const';
 import { User } from '../../types/general';
 import { useAppDispatch } from '../../hooks';
 import { signOutAction } from '../../store/thunks';
+import { unfavoriteAllFilmsAction } from '../../store/actions';
 
 export default function HeaderLogged({ user }: { user: User }): JSX.Element {
   const dispatch = useAppDispatch();
 
   const handleSignOutButtonClick = () => {
-    dispatch(signOutAction());
+    dispatch(signOutAction()).then((result) => {
+      if ('error' in result) {
+        return;
+      }
+
+      dispatch(unfavoriteAllFilmsAction());
+    });
   };
 
   return (

@@ -1,19 +1,11 @@
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppSelector } from '../../hooks';
 import { getPromoFilm } from '../../store/selectors';
 import Header from '../header/header';
 import MyListButton from '../my-list-button/my-list-button';
 import PlayFilmButton from '../play-film-button/play-film-button';
-import { changePromoFilmStatus } from '../../store/actions';
 
 export function PromoFilm(): JSX.Element {
-  const dispatch = useAppDispatch();
   const promoFilm = useAppSelector(getPromoFilm);
-
-  const changeFilmStatus = (): void => {
-    if (promoFilm) {
-      dispatch(changePromoFilmStatus());
-    }
-  };
 
   if (!promoFilm) {
     return (
@@ -48,7 +40,7 @@ export function PromoFilm(): JSX.Element {
             </p>
             <div className='film-card__buttons'>
               <PlayFilmButton filmId={promoFilm.id} />
-              <MyListButton film={promoFilm} onSuccess={changeFilmStatus} />
+              <MyListButton film={promoFilm} />
             </div>
           </div>
         </div>

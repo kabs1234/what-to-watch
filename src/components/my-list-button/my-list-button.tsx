@@ -2,19 +2,18 @@ import { toast } from 'react-toastify';
 import { isAuthorized } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
+  favoriteFilmsSelector,
   getAuthorizationStatus,
-  getFavoriteFilmsCount,
 } from '../../store/selectors';
 import { chageFilmStatusAction } from '../../store/thunks';
 import { FilmType } from '../../types/general';
 import { getFilmStatus } from '../../utils/general';
-import { changeFavoriteFilmsCount } from '../../store/actions';
 import { useState } from 'react';
 import SpinnerDotted from '../spinner-dotted/spinner-dotted';
 
 export type MyListButtonProps = {
   film: FilmType;
-  onSuccess: () => void;
+  onSuccess?: () => void;
 };
 
 export default function MyListButton({
@@ -23,7 +22,7 @@ export default function MyListButton({
 }: MyListButtonProps): JSX.Element {
   const dispatch = useAppDispatch();
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const favoriteFilmsCount = useAppSelector(getFavoriteFilmsCount);
+  const favoriteFilms = useAppSelector(favoriteFilmsSelector);
   const [isChangingStatus, setisChangingStatus] = useState<boolean>();
 
   const handleMyListButtonClick = () => {
@@ -47,8 +46,9 @@ export default function MyListButton({
 
         const isFilmFavorite = result.payload.isFavorite;
 
-        dispatch(changeFavoriteFilmsCount(isFilmFavorite ? 1 : 0));
-        onSuccess();
+        if (onSuccess) {
+          onSuccess();
+        }
 
         if (isFilmFavorite) {
           toast.success('Added film to my list');
@@ -83,8 +83,8 @@ export default function MyListButton({
       )}
       <span>
         My list{' '}
-        {favoriteFilmsCount !== null && isAuthorized(authorizationStatus)
-          ? `(${favoriteFilmsCount})`
+        {favoriteFilms !== undefined && isAuthorized(authorizationStatus)
+          ? `(${favoriteFilms.length})`
           : null}
       </span>
     </button>

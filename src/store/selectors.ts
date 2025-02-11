@@ -1,4 +1,5 @@
 import { State } from '../types/store';
+import { createSelector } from '@reduxjs/toolkit';
 
 export const getFilms = (state: State) => state.films;
 
@@ -15,6 +16,9 @@ export const getAuthorizationStatus = (state: State) =>
 
 export const getUser = (state: State) => state.user;
 
-export const getFavoriteFilmsCount = (state: State) => state.favoriteFilmsCount;
-
 export const getIsFilmsFetchFailed = (state: State) => state.isFilmsFetchFailed;
+
+export const favoriteFilmsSelector = createSelector(
+  [(state: State) => state.films],
+  (films) => films?.filter((film) => film.isFavorite)
+);

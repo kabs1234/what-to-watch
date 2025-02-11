@@ -10,8 +10,8 @@ export const RATING_STARS_COUNT = 10;
 
 export enum Action {
   SetActiveGenre = 'main/setActiveGenre',
-  ChangePromoFilmStatus = 'main/changePromoFilmStatus',
-  ChangeFavoriteFilmsCount = 'myList/changeFavoriteFilmsCount',
+  ReplaceFilmInfo = 'main/replaceFilmInfo',
+  UnfavoriteAllFilms = 'main/unfavoriteAllFilms',
   RedirectToRoute = 'middleware/redirectToRoute',
   FetchFilms = 'api/fetchFilms',
   FetchPromoFilm = 'api/fetchPromoFilm',

@@ -8,9 +8,9 @@ import {
   signOutAction,
 } from './thunks';
 import {
-  changeFavoriteFilmsCount,
-  changePromoFilmStatus,
+  replaceFilmInfoAction,
   setActiveGenreAction,
+  unfavoriteAllFilmsAction,
 } from './actions';
 import { AuthorizationStatus, MAX_GENRES_COUNT } from '../const';
 
@@ -18,7 +18,6 @@ export type InitialState = {
   films: Films | null;
   promoFilm: FilmType | null;
   activeGenre: string;
-  favoriteFilmsCount: number | null;
   genres: string[] | null;
   areOffersLoading: boolean;
   isFilmsFetchFailed: boolean;
@@ -30,7 +29,6 @@ const initialState: InitialState = {
   films: null,
   promoFilm: null,
   activeGenre: 'All',
-  favoriteFilmsCount: null,
   genres: null,
   areOffersLoading: false,
   isFilmsFetchFailed: false,
@@ -40,53 +38,57 @@ const initialState: InitialState = {
 
 export const reducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(
-      changeFavoriteFilmsCount,
-      (state, action: PayloadAction<1 | 0>) => {
-        if (state.favoriteFilmsCount !== null) {
-          if (action.payload === 1) {
-            state.favoriteFilmsCount += 1;
-          } else {
-            state.favoriteFilmsCount -= 1;
-          }
-        }
-      }
-    )
-    .addCase(changePromoFilmStatus, (state, action) => {
+    .addCase(unfavoriteAllFilmsAction, (state, action) => {
       const promoFilm = state.promoFilm;
+
       if (promoFilm) {
         state.promoFilm = {
           ...promoFilm,
-          isFavorite: !promoFilm.isFavorite,
+          isFavorite: false,
         };
       }
+
+      state.films = state.films?.map((film) => ({
+        ...film,
+        isFavorite: false,
+      })) as Films;
     })
-    .addCase(setActiveGenreAction, (state, action: PayloadAction<string>) => {
+    .addCase(replaceFilmInfoAction, (state, action) => {
+      const updatedFilm = action.payload;
+      const films = state.films;
+      const promoFilm = state.promoFilm;
+
+      if (promoFilm && updatedFilm.id === state.promoFilm?.id) {
+        state.promoFilm = { ...updatedFilm };
+      }
+
+      if (films) {
+        const updatedFilmIndex = films.findIndex(
+          (film) => film.id === updatedFilm.id
+        );
+        const updatedFilms = [
+          ...films.slice(0, updatedFilmIndex),
+          updatedFilm,
+          ...films.slice(updatedFilmIndex + 1),
+        ] as Films;
+
+        state.films = updatedFilms;
+      }
+    })
+    .addCase(setActiveGenreAction, (state, action) => {
       state.activeGenre = action.payload;
     })
     .addCase(signOutAction.fulfilled, (state, action) => {
       state.authorizationStatus = AuthorizationStatus.NotAuthorized;
       state.user = null;
-      state.favoriteFilmsCount = null;
-
-      const promoFilm = state.promoFilm;
-
-      if (promoFilm) {
-        state.promoFilm = {
-          ...promoFilm,
-          isFavorite: !promoFilm.isFavorite,
-        };
-      }
     })
     .addCase(signInAction.fulfilled, (state, action: PayloadAction<User>) => {
       state.authorizationStatus = AuthorizationStatus.Authorized;
       state.user = action.payload;
-      state.favoriteFilmsCount = 0;
     })
     .addCase(signInCheckAction.rejected, (state, action) => {
       state.authorizationStatus = AuthorizationStatus.NotAuthorized;
       state.user = null;
-      state.favoriteFilmsCount = null;
     })
     .addCase(
       signInCheckAction.fulfilled,
@@ -102,9 +104,6 @@ export const reducer = createReducer(initialState, (builder) => {
       fetchFilmsAction.fulfilled,
       (state, action: PayloadAction<Films>) => {
         const films = action.payload;
-
-        const favoriteFilms = films.filter((film) => film.isFavorite);
-        state.favoriteFilmsCount = favoriteFilms.length;
 
         const filmGenres = films.map((film: FilmType) => film.genre);
         filmGenres.unshift('All');
