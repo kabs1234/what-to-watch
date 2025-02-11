@@ -5,7 +5,8 @@ import { Comments, Films, FilmType, LoginData, User } from '../types/general';
 import { removeToken, setToken } from '../utils/general';
 import { toast } from 'react-toastify';
 import { AppDispatch } from '../types/store';
-import { redirectToRouteAction, replaceFilmInfoAction } from './actions';
+import { redirectToRouteAction } from './actions';
+import { replaceFilmInfoAction } from './film/film.slice';
 
 export const fetchFilmsAction = createAsyncThunk<
   Films,

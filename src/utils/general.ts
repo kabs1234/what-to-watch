@@ -1,4 +1,4 @@
-import { FilmLevel } from '../const';
+import { AuthorizationStatus, FilmLevel } from '../const';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 dayjs.extend(duration);
@@ -73,3 +73,7 @@ export const getDisplayTime = (
   const remainingTime = videoDuration - currentTime;
   return formatTime(remainingTime);
 };
+
+export const isAuthorized = (
+  authorizationStatus: AuthorizationStatus
+): boolean => authorizationStatus === AuthorizationStatus.Authorized;

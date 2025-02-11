@@ -1,5 +1,5 @@
 import { toast } from 'react-toastify';
-import { isAuthorized } from '../../const';
+
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
   favoriteFilmsSelector,
@@ -7,7 +7,7 @@ import {
 } from '../../store/selectors';
 import { chageFilmStatusAction } from '../../store/thunks';
 import { FilmType } from '../../types/general';
-import { getFilmStatus } from '../../utils/general';
+import { getFilmStatus, isAuthorized } from '../../utils/general';
 import { useState } from 'react';
 import SpinnerDotted from '../spinner-dotted/spinner-dotted';
 

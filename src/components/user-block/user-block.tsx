@@ -1,6 +1,6 @@
-import { isAuthorized } from '../../const';
 import { useAppSelector } from '../../hooks';
 import { getAuthorizationStatus, getUser } from '../../store/selectors';
+import { isAuthorized } from '../../utils/general';
 import HeaderLogged from '../header-logged/header-logged';
 import HeaderNotLogged from '../header-not-logged/header-not-logged';
 

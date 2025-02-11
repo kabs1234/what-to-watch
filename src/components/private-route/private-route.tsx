@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
-import { AppRoute, AuthorizationStatus, isAuthorized } from '../../const';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppDispatch } from '../../hooks';
 import { redirectToRouteAction } from '../../store/actions';
+import { isAuthorized } from '../../utils/general';
 
 type PrivateRouteType = {
   authorizationStatus: AuthorizationStatus;

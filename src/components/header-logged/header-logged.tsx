@@ -3,7 +3,7 @@ import { AppRoute } from '../../const';
 import { User } from '../../types/general';
 import { useAppDispatch } from '../../hooks';
 import { signOutAction } from '../../store/thunks';
-import { unfavoriteAllFilmsAction } from '../../store/actions';
+import { unfavoriteAllFilmsAction } from '../../store/film/film.slice';
 
 export default function HeaderLogged({ user }: { user: User }): JSX.Element {
   const dispatch = useAppDispatch();

@@ -63,8 +63,9 @@ export enum AuthorizationStatus {
   NotAuthorized = 'Not authorized',
 }
 
-export const isAuthorized = (
-  authorizationStatus: AuthorizationStatus
-): boolean => authorizationStatus === AuthorizationStatus.Authorized;
+export enum NameSpace {
+  User = 'User',
+  Film = 'Film',
+}
 
 export const FULL_FILM_NAVIGATIONS = Object.values(FullFilmNav);

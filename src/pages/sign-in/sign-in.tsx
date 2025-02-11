@@ -1,11 +1,15 @@
 import { SyntheticEvent, useEffect, useRef, useState } from 'react';
 import Footer from '../../components/footer/footer';
 import Sprites from '../../components/sprites/sprites';
-import { isEmailValid, isPasswordValid } from '../../utils/general';
+import {
+  isAuthorized,
+  isEmailValid,
+  isPasswordValid,
+} from '../../utils/general';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { signInAction } from '../../store/thunks';
 import { Link } from 'react-router-dom';
-import { AppRoute, isAuthorized } from '../../const';
+import { AppRoute } from '../../const';
 import { getAuthorizationStatus } from '../../store/selectors';
 import { redirectToRouteAction } from '../../store/actions';
 

@@ -1,24 +1,28 @@
+import { NameSpace } from '../const';
 import { State } from '../types/store';
 import { createSelector } from '@reduxjs/toolkit';
 
-export const getFilms = (state: State) => state.films;
+export const getFilms = (state: State) => state[NameSpace.Film].films;
 
-export const getPromoFilm = (state: State) => state.promoFilm;
+export const getPromoFilm = (state: State) => state[NameSpace.Film].promoFilm;
 
-export const getAreFilmsLoading = (state: State) => state.areOffersLoading;
+export const getAreFilmsLoading = (state: State) =>
+  state[NameSpace.Film].areOffersLoading;
 
-export const getActiveGenre = (state: State) => state.activeGenre;
+export const getActiveGenre = (state: State) =>
+  state[NameSpace.Film].activeGenre;
 
-export const getGenres = (state: State) => state.genres;
+export const getGenres = (state: State) => state[NameSpace.Film].genres;
 
 export const getAuthorizationStatus = (state: State) =>
-  state.authorizationStatus;
+  state[NameSpace.User].authorizationStatus;
 
-export const getUser = (state: State) => state.user;
+export const getUser = (state: State) => state[NameSpace.User].user;
 
-export const getIsFilmsFetchFailed = (state: State) => state.isFilmsFetchFailed;
+export const getIsFilmsFetchFailed = (state: State) =>
+  state[NameSpace.Film].isFilmsFetchFailed;
 
 export const favoriteFilmsSelector = createSelector(
-  [(state: State) => state.films],
+  [(state: State) => state[NameSpace.Film].films],
   (films) => films?.filter((film) => film.isFavorite)
 );

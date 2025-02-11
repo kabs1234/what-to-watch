@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../hooks';
 import { getActiveGenre, getGenres } from '../../store/selectors';
 import GenreItem from '../genre-item/genre-item';
-import { setActiveGenreAction } from '../../store/actions';
+import { setActiveGenreAction } from '../../store/film/film.slice';
 
 export default function GenresList(): JSX.Element {
   const activeGenre = useAppSelector(getActiveGenre);
