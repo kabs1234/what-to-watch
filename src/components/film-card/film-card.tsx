@@ -10,12 +10,7 @@ export default function FilmCard({ film }: { film: FilmType }): JSX.Element {
         className='small-film-card__image'
         style={{ display: 'inline-block' }}
       >
-        <img
-          src={film.previewImage}
-          alt='Fantastic Beasts: The Crimes of Grindelwald'
-          width={280}
-          height={175}
-        />
+        <img src={film.previewImage} alt={film.name} width={280} height={175} />
       </Link>
       <h3 className='small-film-card__title'>
         <Link

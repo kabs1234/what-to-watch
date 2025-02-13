@@ -32,7 +32,7 @@ export default function MainFilmCard({
         ) : (
           <img
             src={film.previewImage}
-            alt='Fantastic Beasts: The Crimes of Grindelwald'
+            alt={film.name}
             width={280}
             height={175}
           />
