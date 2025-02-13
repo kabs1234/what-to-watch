@@ -12,7 +12,7 @@ export default function PlayerEmpty(): JSX.Element {
       <div className='player' style={{ backgroundColor: 'black' }}>
         <div className='player__error'>
           <p className='player__error-message' style={{ color: '#eee5b5' }}>
-            Oops.. Seems like we&apos;re having trouble loading your film
+            Oops.. Seems like we are having trouble loading your film.
             <br /> Please try again :)
           </p>
           <button
@@ -21,6 +21,7 @@ export default function PlayerEmpty(): JSX.Element {
               navigate(0);
             }}
           >
+            <span className='visually-hidden'>Снова загрузить фильм</span>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               width={16}
