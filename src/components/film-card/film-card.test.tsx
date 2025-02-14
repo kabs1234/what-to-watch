@@ -1,8 +1,7 @@
 import { createMemoryHistory, MemoryHistory } from 'history';
-import { screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { HistoryRouter } from '../history-route/history-route';
 import userEvent from '@testing-library/user-event';
-import { renderWithProviders } from '../../utils/test-utils';
 import FilmCard from './film-card';
 import { filmMock } from '../../mocks/stub';
 import { AppRoute } from '../../const';
@@ -17,7 +16,7 @@ describe('Component: FilmCard', () => {
   it('should render correctly', () => {
     const fakeFilm = filmMock;
 
-    renderWithProviders(
+    render(
       <HistoryRouter history={history}>
         <FilmCard film={filmMock} />
       </HistoryRouter>
@@ -31,7 +30,7 @@ describe('Component: FilmCard', () => {
     const fakeFilm = filmMock;
     history.push(AppRoute.MyList);
 
-    renderWithProviders(
+    render(
       <HistoryRouter history={history}>
         <FilmCard film={fakeFilm} />
       </HistoryRouter>
@@ -48,7 +47,7 @@ describe('Component: FilmCard', () => {
 
     history.push(`${AppRoute.Films}/2`);
 
-    renderWithProviders(
+    render(
       <HistoryRouter history={history}>
         <FilmCard film={fakeFilm} />
       </HistoryRouter>

@@ -21,7 +21,7 @@ export default function FullFilmInfo({
         <div className='film-card__poster film-card__poster--big'>
           <img
             src={film.posterImage}
-            alt='The Grand Budapest Hotel poster'
+            alt={`${film.name} poster`}
             width={218}
             height={327}
           />

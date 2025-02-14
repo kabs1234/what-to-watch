@@ -8,6 +8,8 @@ export const MAX_GENRES_COUNT = 10;
 
 export const RATING_STARS_COUNT = 10;
 
+export const UNKNOWN_NAVIGATION_MESSAGE = 'Unknown navigation name';
+
 export enum Action {
   SetActiveGenre = 'main/setActiveGenre',
   ReplaceFilmInfo = 'main/replaceFilmInfo',

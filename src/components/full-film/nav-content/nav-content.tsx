@@ -1,4 +1,4 @@
-import { FullFilmNav } from '../../../const';
+import { FullFilmNav, UNKNOWN_NAVIGATION_MESSAGE } from '../../../const';
 import { FilmType } from '../../../types/general';
 import FullFilmDetails from '../details/details';
 import FullFilmOverview from '../overview/overview';
@@ -19,6 +19,8 @@ export default function FullFilmNavContent({
     case FullFilmNav.Reviews:
       return <FullFilmReviews filmId={film.id} />;
     default:
-      return <span style={{ color: '#000' }}>Unknown navigation name</span>;
+      return (
+        <span style={{ color: '#000' }}>{UNKNOWN_NAVIGATION_MESSAGE}</span>
+      );
   }
 }
