@@ -5,13 +5,13 @@ const getById = queryByAttribute.bind(null, 'id');
 
 describe('Component: Sprites', () => {
   it('should render correctly', () => {
-    const view = render(<Sprites />);
+    const { container } = render(<Sprites />);
 
-    const addIcon = getById(view.container, 'add');
-    const fullScreenIcon = getById(view.container, 'full-screen');
-    const inListIcon = getById(view.container, 'in-list');
-    const pauseIcon = getById(view.container, 'pause');
-    const playIcon = getById(view.container, 'play-s');
+    const addIcon = getById(container, 'add');
+    const fullScreenIcon = getById(container, 'full-screen');
+    const inListIcon = getById(container, 'in-list');
+    const pauseIcon = getById(container, 'pause');
+    const playIcon = getById(container, 'play-s');
 
     expect(addIcon).toBeInTheDocument();
     expect(fullScreenIcon).toBeInTheDocument();

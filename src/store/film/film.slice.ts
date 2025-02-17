@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Films, FilmType } from '../../types/general';
 import { fetchFilmsAction, fetchPromoFilm } from '../thunks';
-import { MAX_GENRES_COUNT } from '../../const';
 
 type FilmSlice = {
   films: Films | null;
@@ -79,12 +78,8 @@ export const filmSlice = createSlice({
           const filmGenres = films.map((film: FilmType) => film.genre);
           filmGenres.unshift('All');
 
-          state.genres = Array.from(new Set(filmGenres)).slice(
-            0,
-            MAX_GENRES_COUNT
-          );
-
           state.areOffersLoading = false;
+          state.genres = Array.from(new Set(filmGenres));
           state.films = films;
         }
       )

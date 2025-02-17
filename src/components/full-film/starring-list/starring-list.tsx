@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 
-export default function StarringList({
+export default function FullFilmStarringList({
   starringActors,
 }: {
   starringActors: string[];
@@ -11,7 +11,8 @@ export default function StarringList({
         if (index + 1 !== array.length) {
           return (
             <Fragment key={actor}>
-              {actor}, <br />
+              {`${actor},`}
+              <br />
             </Fragment>
           );
         } else {
