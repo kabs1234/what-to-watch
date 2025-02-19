@@ -1,8 +1,6 @@
-import { useEffect } from 'react';
 import { AppRoute, AuthorizationStatus } from '../../const';
-import { useAppDispatch } from '../../hooks';
-import { redirectToRouteAction } from '../../store/actions';
 import { isAuthorized } from '../../utils/general';
+import { Navigate } from 'react-router-dom';
 
 type PrivateRouteType = {
   authorizationStatus: AuthorizationStatus;
@@ -13,16 +11,12 @@ export default function PrivateRoute({
   authorizationStatus,
   children,
 }: PrivateRouteType): JSX.Element {
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    if (
-      !isAuthorized(authorizationStatus) &&
-      authorizationStatus !== AuthorizationStatus.Unknown
-    ) {
-      dispatch(redirectToRouteAction(AppRoute.SignIn));
-    }
-  }, [authorizationStatus, dispatch]);
+  if (
+    !isAuthorized(authorizationStatus) &&
+    authorizationStatus !== AuthorizationStatus.Unknown
+  ) {
+    return <Navigate to={AppRoute.SignIn} />;
+  }
 
   return children;
 }

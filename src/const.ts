@@ -6,7 +6,7 @@ export const ADDING_FILMS_COUNT = 8;
 
 export const MAX_GENRES_COUNT = 10;
 
-export const RATING_STARS_COUNT = 10;
+export const MAX_COMMENT_RATING = 10;
 
 export const UNKNOWN_NAVIGATION_MESSAGE = 'Unknown navigation name';
 

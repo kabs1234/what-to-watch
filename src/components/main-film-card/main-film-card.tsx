@@ -28,6 +28,7 @@ export default function MainFilmCard({
             width={280}
             style={{ objectFit: 'fill' }}
             loop
+            data-testid='preview-video'
           />
         ) : (
           <img

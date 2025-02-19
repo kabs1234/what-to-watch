@@ -1,4 +1,4 @@
-import { RATING_STARS_COUNT } from '../../const';
+import { MAX_COMMENT_RATING } from '../../const';
 import RatingStar from '../rating-star/rating-star';
 
 type RatingProps = {
@@ -12,7 +12,7 @@ export default function Rating({
 }: RatingProps): JSX.Element {
   const ratingStars: number[] = [];
 
-  for (let i = RATING_STARS_COUNT; i > 0; i--) {
+  for (let i = MAX_COMMENT_RATING; i > 0; i--) {
     ratingStars.push(i);
   }
 

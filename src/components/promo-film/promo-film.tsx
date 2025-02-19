@@ -18,7 +18,7 @@ export function PromoFilm(): JSX.Element {
   return (
     <section className='film-card'>
       <div className='film-card__bg'>
-        <img src={promoFilm.backgroundImage} alt='The Grand Budapest Hotel' />
+        <img src={promoFilm.backgroundImage} alt={promoFilm.name} />
       </div>
       <h1 className='visually-hidden'>WTW</h1>
       <Header />
@@ -27,7 +27,7 @@ export function PromoFilm(): JSX.Element {
           <div className='film-card__poster'>
             <img
               src={promoFilm.posterImage}
-              alt='The Grand Budapest Hotel poster'
+              alt={`${promoFilm.name} poster`}
               width={218}
               height={327}
             />
