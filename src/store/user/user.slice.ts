@@ -19,7 +19,14 @@ export const userSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(signOutAction.fulfilled, (state, action) => {
+      .addCase(
+        signInCheckAction.fulfilled,
+        (state, action: PayloadAction<User>) => {
+          state.authorizationStatus = AuthorizationStatus.Authorized;
+          state.user = action.payload;
+        }
+      )
+      .addCase(signInCheckAction.rejected, (state, action) => {
         state.authorizationStatus = AuthorizationStatus.NotAuthorized;
         state.user = null;
       })
@@ -27,16 +34,9 @@ export const userSlice = createSlice({
         state.authorizationStatus = AuthorizationStatus.Authorized;
         state.user = action.payload;
       })
-      .addCase(signInCheckAction.rejected, (state, action) => {
+      .addCase(signOutAction.fulfilled, (state, action) => {
         state.authorizationStatus = AuthorizationStatus.NotAuthorized;
         state.user = null;
-      })
-      .addCase(
-        signInCheckAction.fulfilled,
-        (state, action: PayloadAction<User>) => {
-          state.authorizationStatus = AuthorizationStatus.Authorized;
-          state.user = action.payload;
-        }
-      );
+      });
   },
 });

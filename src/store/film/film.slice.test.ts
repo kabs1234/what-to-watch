@@ -15,7 +15,7 @@ import {
 } from './film.slice';
 
 const reducer = filmSlice.reducer;
-describe('Slice: Film', () => {
+describe('Reducer slice: Film', () => {
   describe('Sync Actions', () => {
     it('should turn all films to not favorite', () => {
       const state = filmSliceMock;
