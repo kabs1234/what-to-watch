@@ -1,4 +1,4 @@
-import { Comment, Comments, Films, FilmType } from '../types/general';
+import { Comment, Comments, Films, FilmType, User } from '../types/general';
 
 export const filmMock: FilmType = {
   name: 'Snatch',
@@ -294,3 +294,11 @@ export const genresMock = [
   'Mystery',
   'Animation',
 ];
+
+export const userMock: User = {
+  id: 1,
+  email: '123@mail.ru',
+  name: '123',
+  avatarUrl: 'https://10.react.htmlacademy.pro/static/avatar/9.jpg',
+  token: ';aslkdjf209384u5klf',
+};
