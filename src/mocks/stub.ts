@@ -164,7 +164,7 @@ export const filmsMock: Films = [
     genre: 'Thriller',
     released: 2010,
     id: 6,
-    isFavorite: false,
+    isFavorite: true,
     videoLink: 'https://10.react.htmlacademy.pro/static/film/video/matrix.mp4',
     previewVideoLink:
       'https://10.react.htmlacademy.pro/static/film/video/traffic.mp4',
@@ -188,7 +188,7 @@ export const filmsMock: Films = [
     genre: 'Drama',
     released: 2011,
     id: 7,
-    isFavorite: false,
+    isFavorite: true,
     videoLink: 'https://10.react.htmlacademy.pro/static/film/video/bubbles.mp4',
     previewVideoLink:
       'https://10.react.htmlacademy.pro/static/film/video/dog.mp4',
@@ -212,7 +212,7 @@ export const filmsMock: Films = [
     genre: 'Comedy',
     released: 2019,
     id: 8,
-    isFavorite: false,
+    isFavorite: true,
     videoLink: 'https://10.react.htmlacademy.pro/static/film/video/bubbles.mp4',
     previewVideoLink:
       'https://10.react.htmlacademy.pro/static/film/video/traffic.mp4',
@@ -301,4 +301,13 @@ export const userMock: User = {
   name: '123',
   avatarUrl: 'https://10.react.htmlacademy.pro/static/avatar/9.jpg',
   token: ';aslkdjf209384u5klf',
+};
+
+export const filmSliceMock = {
+  films: filmsMock,
+  promoFilm: filmMock,
+  activeGenre: 'All',
+  genres: genresMock,
+  areOffersLoading: false,
+  isFilmsFetchFailed: false,
 };
