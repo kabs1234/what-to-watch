@@ -1,6 +1,13 @@
-import { filmMock, filmSliceMock } from '../../mocks/stub';
-import { Films, FilmType } from '../../types/general';
 import {
+  filmMock,
+  filmSliceMock,
+  filmsMock,
+  initialFilmSliceMock,
+} from '../../mocks/stub';
+import { Films, FilmType } from '../../types/general';
+import { fetchFilmsAction, fetchPromoFilmAction } from '../thunks';
+import {
+  FilmSlice,
   filmSlice,
   replaceFilmInfoAction,
   setActiveGenreAction,
@@ -9,10 +16,10 @@ import {
 
 const reducer = filmSlice.reducer;
 describe('Slice: Film', () => {
-  describe('Sync Actions:', () => {
+  describe('Sync Actions', () => {
     it('should turn all films to not favorite', () => {
       const state = filmSliceMock;
-      const transformedFilms = state.films.map((film) => ({
+      const transformedFilms = state.films?.map((film) => ({
         ...film,
         isFavorite: false,
       }));
@@ -35,7 +42,7 @@ describe('Slice: Film', () => {
       const promoFilm = state.promoFilm;
       let updatedPromoFilm: FilmType = state.promoFilm;
 
-      if (promoFilm && updatedFilm.id === state.promoFilm?.id) {
+      if (promoFilm && updatedFilm.id === state.promoFilm.id) {
         updatedPromoFilm = { ...updatedFilm };
       }
 
@@ -71,6 +78,62 @@ describe('Slice: Film', () => {
           payload: newActiveGenre,
         })
       ).toEqual({ ...state, activeGenre: newActiveGenre });
+    });
+  });
+
+  describe('Async actions', () => {
+    it('should set areOffersLoading to true on films pending', () => {
+      const state: FilmSlice = {
+        ...initialFilmSliceMock,
+        areOffersLoading: false,
+      };
+
+      expect(reducer(state, { type: fetchFilmsAction.pending.type })).toEqual({
+        ...state,
+        areOffersLoading: true,
+      });
+    });
+  });
+
+  it('should setup film slice when films loading is succesful', () => {
+    const state = initialFilmSliceMock;
+    const films = filmsMock;
+
+    const filmGenres = films.map((film: FilmType) => film.genre);
+    filmGenres.unshift('All');
+
+    expect(
+      reducer(state, { type: fetchFilmsAction.fulfilled.type, payload: films })
+    ).toEqual({
+      ...state,
+      genres: Array.from(new Set(filmGenres)),
+      films,
+      areOffersLoading: false,
+    });
+  });
+
+  it('should setup areOffersLoading and isFilmsFetchFailed on films fetch fail', () => {
+    const state = initialFilmSliceMock;
+
+    expect(reducer(state, { type: fetchFilmsAction.rejected.type })).toEqual({
+      ...state,
+      areOffersLoading: false,
+      isFilmsFetchFailed: true,
+    });
+  });
+
+  it('should set promoFilm on fetchPromoFilmAction success', () => {
+    const state = initialFilmSliceMock;
+    const promoFilm = filmMock;
+
+    expect(
+      reducer(state, {
+        type: fetchPromoFilmAction.fulfilled.type,
+        payload: promoFilm,
+      })
+    ).toEqual({
+      ...state,
+      promoFilm,
     });
   });
 });

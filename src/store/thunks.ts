@@ -23,7 +23,7 @@ export const fetchFilmsAction = createAsyncThunk<
   }
 });
 
-export const fetchPromoFilm = createAsyncThunk<
+export const fetchPromoFilmAction = createAsyncThunk<
   FilmType,
   undefined,
   { extra: AxiosInstance }

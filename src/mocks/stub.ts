@@ -1,3 +1,4 @@
+import { FilmSlice } from '../store/film/film.slice';
 import { Comment, Comments, Films, FilmType, User } from '../types/general';
 
 export const filmMock: FilmType = {
@@ -308,6 +309,15 @@ export const filmSliceMock = {
   promoFilm: filmMock,
   activeGenre: 'All',
   genres: genresMock,
+  areOffersLoading: false,
+  isFilmsFetchFailed: false,
+};
+
+export const initialFilmSliceMock: FilmSlice = {
+  films: null,
+  promoFilm: null,
+  activeGenre: 'All',
+  genres: null,
   areOffersLoading: false,
   isFilmsFetchFailed: false,
 };

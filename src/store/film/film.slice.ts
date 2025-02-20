@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Films, FilmType } from '../../types/general';
-import { fetchFilmsAction, fetchPromoFilm } from '../thunks';
+import { fetchFilmsAction, fetchPromoFilmAction } from '../thunks';
 
-type FilmSlice = {
+export type FilmSlice = {
   films: Films | null;
   promoFilm: FilmType | null;
   activeGenre: string;
@@ -88,7 +88,7 @@ export const filmSlice = createSlice({
         state.isFilmsFetchFailed = true;
       })
       .addCase(
-        fetchPromoFilm.fulfilled,
+        fetchPromoFilmAction.fulfilled,
         (state, action: PayloadAction<FilmType>) => {
           state.promoFilm = action.payload;
         }
