@@ -5,7 +5,7 @@ import {
   initialFilmSliceMock,
 } from '../../mocks/stub';
 import { Films, FilmType } from '../../types/general';
-import { fetchFilmsAction, fetchPromoFilmAction } from '../thunks';
+import { fetchFilmsAction, fetchPromoFilmAction } from './film-thunks';
 import {
   FilmSlice,
   filmSlice,

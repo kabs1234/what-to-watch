@@ -4,10 +4,10 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import Spinner from '../spinner/spinner';
 import useVideo from '../../hooks/use-video';
 import { useAppDispatch } from '../../hooks';
-import { fetchFilmAction } from '../../store/thunks';
 import { unwrapResult } from '@reduxjs/toolkit';
 import PlayerControls from '../player-controls/player-controls';
 import PlayerEmpty from '../player-empty/player-empty';
+import { fetchFilmAction } from '../../store/film/film-thunks';
 
 export default function Player(): JSX.Element {
   const { id } = useParams();

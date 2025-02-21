@@ -9,9 +9,9 @@ import UserBlock from '../../components/user-block/user-block';
 import Logo from '../../components/logo/logo';
 import { AppRoute } from '../../const';
 import { SyntheticEvent, useState } from 'react';
-import { postCommentAction } from '../../store/thunks';
 import { redirectToRouteAction } from '../../store/actions';
 import Spinner from '../../components/spinner/spinner';
+import { postCommentAction } from '../../store/film/film-thunks';
 
 export default function AddReview(): JSX.Element {
   const { id } = useParams();

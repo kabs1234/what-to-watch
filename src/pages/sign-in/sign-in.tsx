@@ -7,11 +7,11 @@ import {
   isPasswordValid,
 } from '../../utils/general';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { signInAction } from '../../store/thunks';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { getAuthorizationStatus } from '../../store/selectors';
 import { redirectToRouteAction } from '../../store/actions';
+import { signInAction } from '../../store/user/user-thunks';
 
 export default function SignIn(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);

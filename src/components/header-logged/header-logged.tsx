@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { User } from '../../types/general';
 import { useAppDispatch } from '../../hooks';
-import { signOutAction } from '../../store/thunks';
 import { unfavoriteAllFilmsAction } from '../../store/film/film.slice';
+import { signOutAction } from '../../store/user/user-thunks';
 
 export default function HeaderLogged({ user }: { user: User }): JSX.Element {
   const dispatch = useAppDispatch();

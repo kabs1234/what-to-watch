@@ -1,6 +1,6 @@
 import { AuthorizationStatus } from '../../const';
 import { userMock } from '../../mocks/stub';
-import { signInAction, signInCheckAction, signOutAction } from '../thunks';
+import { signInCheckAction, signInAction, signOutAction } from './user-thunks';
 import { userSlice } from './user.slice';
 
 const reducer = userSlice.reducer;

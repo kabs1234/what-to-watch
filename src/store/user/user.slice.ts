@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AuthorizationStatus } from '../../const';
 import { User } from '../../types/general';
-import { signInAction, signInCheckAction, signOutAction } from '../thunks';
+import { signInCheckAction, signInAction, signOutAction } from './user-thunks';
 
 type UserSlice = {
   authorizationStatus: AuthorizationStatus;

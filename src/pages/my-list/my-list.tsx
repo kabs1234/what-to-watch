@@ -4,11 +4,11 @@ import Logo from '../../components/logo/logo';
 import Sprites from '../../components/sprites/sprites';
 import { Films } from '../../types/general';
 import { useAppDispatch } from '../../hooks';
-import { fetchFavoriteFilmsAction } from '../../store/thunks';
 import UserBlock from '../../components/user-block/user-block';
 import FilmCard from '../../components/film-card/film-card';
 import Spinner from '../../components/spinner/spinner';
 import TryAgain from '../try-again/try-again';
+import { fetchFavoriteFilmsAction } from '../../store/film/film-thunks';
 
 export default function MyList(): JSX.Element {
   const [favoriteFilms, setFavoriteFilms] = useState<Films | null>(null);

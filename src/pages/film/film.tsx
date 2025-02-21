@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchFilmAction, fetchSimilarFilmsAction } from '../../store/thunks';
 import { Films, FilmType } from '../../types/general';
 import Header from '../../components/header/header';
 import Sprites from '../../components/sprites/sprites';
@@ -16,6 +15,10 @@ import Spinner from '../../components/spinner/spinner';
 import { unwrapResult } from '@reduxjs/toolkit';
 import TryAgain from '../try-again/try-again';
 import { isAuthorized } from '../../utils/general';
+import {
+  fetchFilmAction,
+  fetchSimilarFilmsAction,
+} from '../../store/film/film-thunks';
 
 export default function Film(): JSX.Element {
   const { id } = useParams();

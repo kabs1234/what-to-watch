@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import FullFilmReview from '../review/review';
 import { Comments } from '../../../types/general';
 import { useAppDispatch } from '../../../hooks';
-import { fetchCommentsAction } from '../../../store/thunks';
+import { fetchCommentsAction } from '../../../store/film/film-thunks';
 
 export default function FullFilmReviews({
   filmId,

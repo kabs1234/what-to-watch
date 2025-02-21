@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Films, FilmType } from '../../types/general';
-import { fetchFilmsAction, fetchPromoFilmAction } from '../thunks';
+import { fetchFilmsAction, fetchPromoFilmAction } from './film-thunks';
 
 export type FilmSlice = {
   films: Films | null;
