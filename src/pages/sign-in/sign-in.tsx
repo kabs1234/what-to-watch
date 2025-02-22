@@ -9,9 +9,9 @@ import {
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { getAuthorizationStatus } from '../../store/selectors';
 import { redirectToRouteAction } from '../../store/actions';
 import { signInAction } from '../../store/user/user-thunks';
+import { getAuthorizationStatus } from '../../store/user/user-selectors';
 
 export default function SignIn(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);

@@ -1,5 +1,8 @@
 import { useAppSelector } from '../../hooks';
-import { getAuthorizationStatus, getUser } from '../../store/selectors';
+import {
+  getAuthorizationStatus,
+  getUser,
+} from '../../store/user/user-selectors';
 import { isAuthorized } from '../../utils/general';
 import HeaderLogged from '../header-logged/header-logged';
 import HeaderNotLogged from '../header-not-logged/header-not-logged';

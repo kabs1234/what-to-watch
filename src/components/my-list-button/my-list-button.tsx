@@ -1,15 +1,13 @@
 import { toast } from 'react-toastify';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import {
-  favoriteFilmsSelector,
-  getAuthorizationStatus,
-} from '../../store/selectors';
 import { FilmType } from '../../types/general';
 import { getFilmStatus, isAuthorized } from '../../utils/general';
 import { useState } from 'react';
 import SpinnerDotted from '../spinner-dotted/spinner-dotted';
 import { chageFilmStatusAction } from '../../store/film/film-thunks';
+import { getAuthorizationStatus } from '../../store/user/user-selectors';
+import { favoriteFilmsSelector } from '../../store/film/film-selectors';
 
 export type MyListButtonProps = {
   film: FilmType;

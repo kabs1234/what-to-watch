@@ -1,6 +1,6 @@
-import { NameSpace } from '../const';
-import { State } from '../types/store';
 import { createSelector } from '@reduxjs/toolkit';
+import { NameSpace } from '../../const';
+import { State } from '../../types/store';
 
 export const getFilms = (state: State) => state[NameSpace.Film].films;
 
@@ -13,11 +13,6 @@ export const getActiveGenre = (state: State) =>
   state[NameSpace.Film].activeGenre;
 
 export const getGenres = (state: State) => state[NameSpace.Film].genres;
-
-export const getAuthorizationStatus = (state: State) =>
-  state[NameSpace.User].authorizationStatus;
-
-export const getUser = (state: State) => state[NameSpace.User].user;
 
 export const getIsFilmsFetchFailed = (state: State) =>
   state[NameSpace.Film].isFilmsFetchFailed;

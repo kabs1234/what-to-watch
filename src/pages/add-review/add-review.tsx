@@ -2,7 +2,6 @@ import { Link, useParams } from 'react-router-dom';
 import Rating from '../../components/rating/rating';
 import Sprites from '../../components/sprites/sprites';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getAuthorizationStatus, getFilms } from '../../store/selectors';
 import NotFound from '../not-found/not-found';
 import { isAuthorized, shadeColor } from '../../utils/general';
 import UserBlock from '../../components/user-block/user-block';
@@ -12,6 +11,8 @@ import { SyntheticEvent, useState } from 'react';
 import { redirectToRouteAction } from '../../store/actions';
 import Spinner from '../../components/spinner/spinner';
 import { postCommentAction } from '../../store/film/film-thunks';
+import { getAuthorizationStatus } from '../../store/user/user-selectors';
+import { getFilms } from '../../store/film/film-selectors';
 
 export default function AddReview(): JSX.Element {
   const { id } = useParams();

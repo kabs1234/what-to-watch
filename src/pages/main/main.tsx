@@ -4,14 +4,14 @@ import GenresList from '../../components/genres-list/genres-list';
 import FilmsList from '../../components/films-list/films-list';
 import Footer from '../../components/footer/footer';
 import { useAppSelector } from '../../hooks';
-import {
-  getActiveGenre,
-  getFilms,
-  getIsFilmsFetchFailed,
-} from '../../store/selectors';
 import { useEffect, useState } from 'react';
 import { ADDING_FILMS_COUNT, STARTING_FILMS_COUNT } from '../../const';
 import MainEmpty from '../main-empty/main-empty';
+import {
+  getActiveGenre,
+  getIsFilmsFetchFailed,
+  getFilms,
+} from '../../store/film/film-selectors';
 
 export default function Main(): JSX.Element {
   const activeGenre = useAppSelector(getActiveGenre);

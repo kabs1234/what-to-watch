@@ -1,5 +1,5 @@
 import { useAppSelector } from '../../hooks';
-import { getPromoFilm } from '../../store/selectors';
+import { getPromoFilm } from '../../store/film/film-selectors';
 import Header from '../header/header';
 import MyListButton from '../my-list-button/my-list-button';
 import PlayFilmButton from '../play-film-button/play-film-button';
