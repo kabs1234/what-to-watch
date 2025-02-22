@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { createAPI } from '../services/api';
 import { rootReducer } from './root-reducer';
-import { redirectMiddleware } from '../middleware/redirect';
 import { fetchPromoFilmAction, fetchFilmsAction } from './film/film-thunks';
 import { signInCheckAction } from './user/user-thunks';
+import { redirectMiddleware } from './middleware/redirect';
 
 const api = createAPI();
 
