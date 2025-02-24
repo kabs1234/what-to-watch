@@ -58,6 +58,7 @@ export default function FullFilmReviews({
       </p>
     );
   }
+
   const halfCommentsCount = Math.ceil(comments.length / 2);
 
   return (
