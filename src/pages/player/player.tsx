@@ -1,12 +1,12 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import Sprites from '../sprites/sprites';
+import Sprites from '../../components/sprites/sprites';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import Spinner from '../spinner/spinner';
+import Spinner from '../../components/spinner/spinner';
 import useVideo from '../../hooks/use-video';
 import { useAppDispatch } from '../../hooks';
 import { unwrapResult } from '@reduxjs/toolkit';
-import PlayerControls from '../player-controls/player-controls';
-import PlayerEmpty from '../player-empty/player-empty';
+import PlayerControls from '../../components/player-controls/player-controls';
+import PlayerEmpty from '../../components/player-empty/player-empty';
 import { fetchFilmAction } from '../../store/film/film-thunks';
 
 export default function Player(): JSX.Element {
@@ -39,14 +39,11 @@ export default function Player(): JSX.Element {
     const videoPlayer = videoRef.current;
 
     if (videoPlayer) {
-      if (activeControl === 'play') {
+      if (videoPlayer.paused) {
         videoPlayer.play();
-        setActiveControl('pause');
-        return;
+      } else {
+        videoPlayer.pause();
       }
-
-      setActiveControl('play');
-      videoPlayer.pause();
     }
   };
 
@@ -54,13 +51,16 @@ export default function Player(): JSX.Element {
     navigate(-1);
   };
 
-  const {
-    activeControl,
-    currentTime,
-    videoDuration,
-    videoProgress,
-    setActiveControl,
-  } = useVideo(videoRef, videoLink);
+  const handleFullScreenButtonClick = (): void => {
+    const videoPlayer = videoRef.current;
+
+    videoPlayer?.requestFullscreen();
+  };
+
+  const { activeControl, currentTime, videoDuration, videoProgress } = useVideo(
+    videoRef,
+    videoLink
+  );
 
   useEffect(() => {
     fetchFilm();
@@ -89,6 +89,7 @@ export default function Player(): JSX.Element {
         <PlayerControls
           activeControl={activeControl}
           onControlButtonClick={handleControlButtonClick}
+          onFullScreenButtonClick={handleFullScreenButtonClick}
           currentTime={currentTime}
           videoDuration={videoDuration}
           videoProgress={videoProgress}

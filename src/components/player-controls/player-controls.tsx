@@ -6,6 +6,7 @@ type PlayerControlsProps = {
   videoDuration: number | null;
   currentTime: number;
   activeControl?: 'play' | 'pause';
+  onFullScreenButtonClick?: () => void;
   onControlButtonClick?: () => void;
 };
 
@@ -15,6 +16,7 @@ export default function PlayerControls({
   videoDuration,
   currentTime,
   activeControl = 'play',
+  onFullScreenButtonClick,
   onControlButtonClick,
 }: PlayerControlsProps): JSX.Element {
   return (
@@ -51,7 +53,11 @@ export default function PlayerControls({
           <span>{activeControl === 'play' ? 'Play' : 'Pause'}</span>
         </button>
         <div className='player__name'>Transpotting</div>
-        <button type='button' className='player__full-screen'>
+        <button
+          type='button'
+          className='player__full-screen'
+          onClick={onFullScreenButtonClick}
+        >
           <svg viewBox='0 0 27 27' width={27} height={27}>
             <use xlinkHref='#full-screen' />
           </svg>

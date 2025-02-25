@@ -36,12 +36,24 @@ export default function useVideo(
       }
     };
 
+    const handleVideoPause = (): void => {
+      setActiveControl('play');
+    };
+
+    const handleVideoPlay = (): void => {
+      setActiveControl('pause');
+    };
+
     videoPlayer?.addEventListener('loadedmetadata', handleLoadedMetadata);
     videoPlayer?.addEventListener('timeupdate', handleTimeUpdate);
+    videoPlayer?.addEventListener('pause', handleVideoPause);
+    videoPlayer?.addEventListener('play', handleVideoPlay);
 
     return () => {
       videoPlayer?.removeEventListener('loadedmetadata', handleLoadedMetadata);
       videoPlayer?.removeEventListener('timeupdate', handleTimeUpdate);
+      videoPlayer?.removeEventListener('pause', handleVideoPause);
+      videoPlayer?.removeEventListener('play', handleVideoPlay);
     };
   }, [videoRef, videoLink]);
 
@@ -50,6 +62,5 @@ export default function useVideo(
     currentTime,
     videoDuration,
     videoProgress,
-    setActiveControl,
   };
 }

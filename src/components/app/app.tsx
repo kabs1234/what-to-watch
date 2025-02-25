@@ -8,7 +8,7 @@ import { useAppSelector } from '../../hooks';
 import Film from '../../pages/film/film';
 import PrivateRoute from '../private-route/private-route';
 import AddReview from '../../pages/add-review/add-review';
-import Player from '../player/player';
+import Player from '../../pages/player/player';
 import Spinner from '../spinner/spinner';
 import { getAuthorizationStatus } from '../../store/user/user-selectors';
 import { getAreFilmsLoading } from '../../store/film/film-selectors';
