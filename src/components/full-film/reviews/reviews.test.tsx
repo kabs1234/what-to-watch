@@ -13,7 +13,7 @@ jest.mock('../../../store/film/film-thunks', () => ({
 
 const mockedFetchCommentsAction = fetchCommentsAction as unknown as jest.Mock;
 
-describe('FullFilmReviews Component', () => {
+describe('Component: FullFilmReviews', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
