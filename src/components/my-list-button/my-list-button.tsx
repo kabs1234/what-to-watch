@@ -1,5 +1,4 @@
 import { toast } from 'react-toastify';
-
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { FilmType } from '../../types/general';
 import { getFilmStatus, isAuthorized } from '../../utils/general';

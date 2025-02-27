@@ -1,16 +1,8 @@
 import { render, screen } from '@testing-library/react';
-// import userEvent from '@testing-library/user-event';
 import { HistoryRouter } from '../history-route/history-route';
 import PlayerEmpty from './player-empty';
 import { createMemoryHistory, MemoryHistory } from 'history';
 import userEvent from '@testing-library/user-event';
-
-// const mockedNavigate = jest.fn();
-
-// jest.mock('react-router-dom', () => ({
-//   ...jest.requireActual('react-router-dom'),
-//   useNavigate: () => mockedNavigate,
-// }));
 
 describe('Component: PlayerEmpty', () => {
   let history: MemoryHistory;

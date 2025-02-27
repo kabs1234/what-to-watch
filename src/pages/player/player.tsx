@@ -18,12 +18,6 @@ export default function Player(): JSX.Element {
   const [videoLink, setVideoLink] = useState<string | null>(null);
   const [isVideoFetchFailed, setIsVideoFetchFailed] = useState<boolean>(false);
 
-  const videoProgressWidth =
-    Math.max(
-      document.documentElement.clientWidth || 0,
-      window.innerWidth || 0
-    ) - 130;
-
   const fetchFilm = useCallback(async (): Promise<void> => {
     try {
       const fetchedFilm = await dispatch(fetchFilmAction(Number(id)));
@@ -78,7 +72,12 @@ export default function Player(): JSX.Element {
     <>
       <Sprites />
       <div className='player'>
-        <video src={videoLink} className='player__video' ref={videoRef} />
+        <video
+          src={videoLink}
+          className='player__video'
+          ref={videoRef}
+          data-testid='video'
+        />
         <button
           type='button'
           className='player__exit'
@@ -93,7 +92,6 @@ export default function Player(): JSX.Element {
           currentTime={currentTime}
           videoDuration={videoDuration}
           videoProgress={videoProgress}
-          videoProgressWidth={videoProgressWidth}
         />
       </div>
     </>

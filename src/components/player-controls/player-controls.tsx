@@ -2,7 +2,6 @@ import { getDisplayTime } from '../../utils/general';
 
 type PlayerControlsProps = {
   videoProgress: number;
-  videoProgressWidth: number;
   videoDuration: number | null;
   currentTime: number;
   activeControl?: 'play' | 'pause';
@@ -12,13 +11,18 @@ type PlayerControlsProps = {
 
 export default function PlayerControls({
   videoProgress,
-  videoProgressWidth,
   videoDuration,
   currentTime,
   activeControl = 'play',
   onFullScreenButtonClick,
   onControlButtonClick,
 }: PlayerControlsProps): JSX.Element {
+  const videoProgressWidth =
+    Math.max(
+      document.documentElement.clientWidth || 0,
+      window.innerWidth || 0
+    ) - 130;
+
   return (
     <div className='player__controls'>
       <div className='player__controls-row'>

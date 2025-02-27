@@ -45,12 +45,7 @@ export default function PlayerEmpty(): JSX.Element {
         >
           Exit
         </button>
-        <PlayerControls
-          currentTime={0}
-          videoDuration={0}
-          videoProgress={0}
-          videoProgressWidth={0}
-        />
+        <PlayerControls currentTime={0} videoDuration={0} videoProgress={0} />
       </div>
     </>
   );
