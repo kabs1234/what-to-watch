@@ -7,7 +7,7 @@ import { HistoryRouter } from '../../components/history-route/history-route';
 
 const history = createMemoryHistory();
 
-describe('Component: MainEmpty', () => {
+describe('Page: MainEmpty', () => {
   it('should render correctly', () => {
     renderWithProviders(
       <HistoryRouter history={history}>

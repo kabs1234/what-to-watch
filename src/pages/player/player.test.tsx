@@ -32,7 +32,7 @@ jest.mock('react-router-dom', () => ({
   useParams: () => ({ id: '123' }),
 }));
 
-describe('Component: Player', () => {
+describe('Page: Player', () => {
   const mockFilm = filmMock;
 
   beforeEach(() => {
